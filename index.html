@@ -2,70 +2,830 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>AutoCare | Subscription Platform</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoCare | Maintenance as a Service</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00D4FF;
+      --primary-dark: #0099CC;
+      --secondary: #7B61FF;
+      --dark: #0A0E17;
+      --dark-card: #151A28;
+      --light: #F0F4FF;
+      --success: #00CC88;
+      --warning: #FFAA00;
+      --danger: #FF5555;
+      --gradient: linear-gradient(135deg, #00D4FF 0%, #7B61FF 100%);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--light);
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(123, 97, 255, 0.15) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 212, 255, 0.15) 0%, transparent 20%);
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      font-size: 14px;
+      opacity: 0.7;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 80px 0 60px;
+      position: relative;
+    }
+
+    .hero h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero h2 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    /* INPUT CARD */
+    .input-card {
+      background: var(--dark-card);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .input-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .input-card label {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+
+    .input-group {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    #plate {
+      flex: 1;
+      padding: 18px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid var(--glass-border);
+      border-radius: 16px;
+      font-size: 1.2rem;
+      color: white;
+      font-family: 'Orbitron', monospace;
+      letter-spacing: 2px;
+      transition: all 0.3s;
+    }
+
+    #plate:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 18px 36px;
+      border-radius: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .btn-primary i {
+      font-size: 1.2rem;
+    }
+
+    /* VEHICLE RESULT */
+    .vehicle-card {
+      background: var(--dark-card);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .vehicle-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(0, 212, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 36px;
+      color: var(--primary);
+    }
+
+    .vehicle-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .vehicle-type {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .ice-badge {
+      color: var(--warning);
+      border: 2px solid var(--warning);
+    }
+
+    .ev-badge {
+      color: var(--success);
+      border: 2px solid var(--success);
+    }
+
+    /* PLANS */
+    .plans-section {
+      padding: 40px 0;
+    }
+
+    .plans-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .plan-card {
+      background: var(--dark-card);
+      border-radius: 20px;
+      padding: 36px;
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+    }
+
+    .plan-card.highlight {
+      border: 2px solid var(--primary);
+      transform: scale(1.05);
+    }
+
+    .plan-card.highlight::before {
+      content: 'POPOLARE';
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: var(--primary);
+      color: var(--dark);
+      padding: 6px 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transform: rotate(45deg);
+    }
+
+    .plan-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .ice-badge-sm {
+      background: rgba(255, 170, 0, 0.15);
+      color: var(--warning);
+    }
+
+    .ev-badge-sm {
+      background: rgba(0, 204, 136, 0.15);
+      color: var(--success);
+    }
+
+    .plan-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .plan-description {
+      opacity: 0.8;
+      margin-bottom: 24px;
+      min-height: 60px;
+    }
+
+    .plan-features {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+
+    .plan-features li {
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .plan-features li i {
+      color: var(--success);
+    }
+
+    .price {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .price span {
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    .btn-plan {
+      width: 100%;
+      padding: 16px;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-plan:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
+    }
+
+    /* CONFIRMATION */
+    .confirmation {
+      background: var(--dark-card);
+      border-radius: 24px;
+      padding: 60px 40px;
+      max-width: 600px;
+      margin: 40px auto;
+      border: 2px solid var(--success);
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .confirmation-icon {
+      width: 100px;
+      height: 100px;
+      background: rgba(0, 204, 136, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-size: 48px;
+      color: var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    .confirmation h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: var(--success);
+    }
+
+    .confirmation-details {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+
+    .btn-back {
+      margin-top: 20px;
+      padding: 14px 28px;
+      background: transparent;
+      color: var(--light);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 1px solid var(--glass-border);
+      margin-top: 60px;
+      opacity: 0.7;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* UTILITY */
+    .hidden {
+      display: none !important;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+      
+      .input-group {
+        flex-direction: column;
+      }
+      
+      .plans-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .plan-card.highlight {
+        transform: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-car"></i>
+        </div>
+        <div>
+          <h1>AutoCare</h1>
+          <div class="tagline">Maintenance as a Service</div>
+        </div>
+      </div>
+      <div class="tagline">Europe Ready</div>
+    </header>
 
-<header>
-  <h1>AutoCare</h1>
-  <span>Maintenance as a Service</span>
-</header>
+    <!-- HERO -->
+    <section class="hero">
+      <h2>La manutenzione dell'auto<br><span>entra nel futuro</span></h2>
+      <p>Abbonamenti intelligenti per auto termiche, ibride ed elettriche. Nessun imprevisto, solo tranquillità.</p>
+    </section>
 
-<section class="hero">
-  <h2>La manutenzione dell’auto<br><span>entra nel futuro</span></h2>
-  <p>Abbonamenti intelligenti per auto termiche ed elettriche</p>
-</section>
+    <!-- INPUT CARD -->
+    <section class="input-card" id="inputSection">
+      <label for="plate"><i class="fas fa-search"></i> ANALIZZA IL TUO VEICOLO</label>
+      <div class="input-group">
+        <input type="text" id="plate" placeholder="ES: AB123CD" maxlength="7" autocomplete="off">
+        <button class="btn-primary" onclick="detectVehicle()" id="analyzeBtn">
+          <i class="fas fa-bolt"></i> Analizza
+        </button>
+      </div>
+      <p style="opacity: 0.7; font-size: 0.9rem; margin-top: 10px;">
+        <i class="fas fa-shield-alt"></i> I tuoi dati sono sicuri e crittografati
+      </p>
+    </section>
 
-<section class="card glass">
-  <label>Inserisci la targa</label>
-  <input type="text" id="plate" placeholder="AB123CD">
-  <button onclick="detectVehicle()">Analizza veicolo</button>
-</section>
+    <!-- VEHICLE RESULT -->
+    <section class="vehicle-card hidden" id="vehicleResult">
+      <div class="vehicle-icon">
+        <i id="vehicleIcon"></i>
+      </div>
+      <h3>Veicolo identificato</h3>
+      <div class="vehicle-type" id="vehicleTypeBadge"></div>
+      <p style="margin-bottom: 30px; opacity: 0.8;">Abbiamo analizzato la tua targa e identificato il tipo di veicolo.</p>
+      <button class="btn-primary" onclick="showPlans()">
+        <i class="fas fa-arrow-right"></i> Vedi piani disponibili
+      </button>
+    </section>
 
-<section class="card glass hidden" id="vehicleResult">
-  <h3>Veicolo rilevato</h3>
-  <p id="vehicleType"></p>
-  <button onclick="showPlans()">Continua</button>
-</section>
+    <!-- PLANS SECTION -->
+    <section class="plans-section hidden" id="plansSection">
+      <h2>Scegli il tuo piano AutoCare</h2>
+      <div class="plans-grid" id="plansContainer">
+        <!-- Plans will be dynamically inserted here -->
+      </div>
+    </section>
 
-<section class="plans hidden" id="plans">
+    <!-- CONFIRMATION -->
+    <section class="confirmation hidden" id="confirmation">
+      <div class="confirmation-icon">
+        <i class="fas fa-check"></i>
+      </div>
+      <h3>Abbonamento attivato!</h3>
+      <div class="confirmation-details">
+        <p id="summary"></p>
+        <p style="margin-top: 15px; opacity: 0.8;">
+          <i class="fas fa-envelope"></i> Riceverai una email di conferma con tutti i dettagli.
+        </p>
+      </div>
+      <p style="opacity: 0.8; margin-bottom: 20px;">
+        Il nostro team ti contatterà entro 24 ore per programmare il primo intervento.
+      </p>
+      <button class="btn-back" onclick="resetFlow()">
+        <i class="fas fa-redo"></i> Analizza un altro veicolo
+      </button>
+    </section>
 
-  <div class="plan">
-    <h4>Oil Basic</h4>
-    <p>1 cambio olio / anno</p>
-    <span class="price">79€</span>
-    <button onclick="subscribe('Oil Basic')">Abbonati</button>
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2026 AutoCare Platform – Tutti i diritti riservati</p>
+      <p style="margin-top: 10px; font-size: 0.9rem;">
+        <i class="fas fa-lock"></i> Crittografia end-to-end | 
+        <i class="fas fa-shield-alt"></i> Conforme GDPR |
+        <i class="fas fa-leaf"></i> Compensazione CO₂
+      </p>
+    </footer>
   </div>
 
-  <div class="plan highlight">
-    <h4>Oil Plus</h4>
-    <p>2 cambi + filtri</p>
-    <span class="price">119€</span>
-    <button onclick="subscribe('Oil Plus')">Abbonati</button>
-  </div>
+  <script>
+    // Mock database for vehicle types (in a real app, this would be an API call)
+    const vehicleDatabase = {
+      'AB123CD': { type: 'ICE', brand: 'Fiat', model: '500', year: '2020' },
+      'EF456GH': { type: 'EV', brand: 'Tesla', model: 'Model 3', year: '2022' },
+      'IJ789KL': { type: 'HYBRID', brand: 'Toyota', model: 'Prius', year: '2021' },
+      'MN012OP': { type: 'ICE', brand: 'Volkswagen', model: 'Golf', year: '2019' },
+      'QR345ST': { type: 'EV', brand: 'BMW', model: 'i4', year: '2023' }
+    };
 
-  <div class="plan ev">
-    <h4>EV Care</h4>
-    <p>Check EV & fluidi</p>
-    <span class="price">129€</span>
-    <button onclick="subscribe('EV Care')">Abbonati</button>
-  </div>
+    // Plans data
+    const plans = {
+      ICE: [
+        {
+          name: "Oil Basic",
+          badge: "ICE",
+          description: "Per chi fa pochi chilometri all'anno",
+          price: 79,
+          features: ["1 cambio olio/anno", "Diagnostica computerizzata", "Report digitale", "Assistenza 24/7"]
+        },
+        {
+          name: "Oil Plus",
+          badge: "ICE",
+          description: "La scelta più popolare per auto termiche",
+          price: 119,
+          features: ["2 cambi olio/anno", "Sostituzione filtri aria/abitacolo", "Check freni e sospensioni", "Priority booking"]
+        },
+        {
+          name: "Full Care",
+          badge: "ICE",
+          description: "Manutenzione completa a 360°",
+          price: 189,
+          features: ["3 cambi olio/anno", "Tagliando completo", "Sostituzione pastiglie freni", "Assistenza stradale", "Car rental durante interventi"]
+        }
+      ],
+      EV: [
+        {
+          name: "EV Essential",
+          badge: "EV",
+          description: "Manutenzione base per veicoli elettrici",
+          price: 99,
+          features: ["Controllo sistema batteria", "Diagnostica sistema di ricarica", "Check freni rigenerativi", "Report digitale"]
+        },
+        {
+          name: "EV Care",
+          badge: "EV",
+          description: "Piano completo per la tua EV",
+          price: 149,
+          features: ["Controllo batteria approfondito", "Sostituzione liquido refrigerante", "Calibrazione ADAS", "Priority booking", "Check-up ricarica rapida"]
+        },
+        {
+          name: "EV Premium",
+          badge: "EV",
+          description: "La massima tranquillità per la tua EV",
+          price: 229,
+          features: ["Tutti i servizi EV Care", "Controllo sistema di raffreddamento", "Diagnostica predittiva", "Assistenza dedicata EV", "Sostituzione filtri abitacolo"]
+        }
+      ]
+    };
 
-</section>
+    let currentVehicleType = '';
+    let selectedPlan = '';
 
-<section class="card glass hidden" id="confirmation">
-  <h3>Abbonamento attivato</h3>
-  <p id="summary"></p>
-</section>
+    function detectVehicle() {
+      const plate = document.getElementById('plate').value.toUpperCase().replace(/\s/g, '');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      
+      if (!plate || plate.length < 4) {
+        showNotification("Inserisci una targa valida", "warning");
+        return;
+      }
 
-<footer>
-  © 2026 AutoCare Platform – Europe Ready
-</footer>
+      // Show loading
+      analyzeBtn.innerHTML = '<span class="loading"></span> Analisi in corso...';
+      analyzeBtn.disabled = true;
 
-<script src="app.js"></script>
+      // Simulate API call
+      setTimeout(() => {
+        // Check if plate exists in our mock database
+        let vehicleInfo;
+        if (vehicleDatabase[plate]) {
+          vehicleInfo = vehicleDatabase[plate];
+        } else {
+          // Randomly assign a vehicle type for demo
+          const types = ['ICE', 'EV', 'HYBRID'];
+          vehicleInfo = {
+            type: types[Math.floor(Math.random() * types.length)],
+            brand: 'Marca',
+            model: 'Modello',
+            year: '2020+'
+          };
+        }
+
+        currentVehicleType = vehicleInfo.type;
+        
+        // Update UI
+        const vehicleTypeElement = document.getElementById('vehicleTypeBadge');
+        const vehicleIcon = document.getElementById('vehicleIcon');
+        
+        let badgeClass = 'ice-badge';
+        let icon = 'fas fa-gas-pump';
+        let displayType = 'TERMICA (Benzina/Diesel)';
+        
+        if (currentVehicleType === 'EV') {
+          badgeClass = 'ev-badge';
+          icon = 'fas fa-bolt';
+          displayType = 'ELETTRICA (EV)';
+        } else if (currentVehicleType === 'HYBRID') {
+          badgeClass = 'ice-badge';
+          icon = 'fas fa-charging-station';
+          displayType = 'IBRIDA';
+        }
+        
+        vehicleTypeElement.className = `vehicle-type ${badgeClass}`;
+        vehicleTypeElement.textContent = displayType;
+        vehicleIcon.className = icon;
+        
+        // Show result
+        document.getElementById('vehicleResult').classList.remove('hidden');
+        analyzeBtn.innerHTML = '<i class="fas fa-bolt"></i> Analizza';
+        analyzeBtn.disabled = false;
+        
+        // Scroll to result
+        document.getElementById('vehicleResult').scrollIntoView({ behavior: 'smooth' });
+        
+      }, 1500);
+    }
+
+    function showPlans() {
+      // Hide vehicle result
+      document.getElementById('vehicleResult').classList.add('hidden');
+      
+      // Determine which plans to show
+      const planType = currentVehicleType === 'EV' ? 'EV' : 'ICE';
+      const planData = plans[planType];
+      
+      // Clear and populate plans container
+      const plansContainer = document.getElementById('plansContainer');
+      plansContainer.innerHTML = '';
+      
+      planData.forEach((plan, index) => {
+        const isHighlight = index === 1; // Make second plan highlighted
+        const badgeClass = planType === 'EV' ? 'ev-badge-sm' : 'ice-badge-sm';
+        
+        const planCard = document.createElement('div');
+        planCard.className = `plan-card ${isHighlight ? 'highlight' : ''}`;
+        planCard.innerHTML = `
+          <div class="plan-badge ${badgeClass}">${plan.badge}</div>
+          <h3>${plan.name}</h3>
+          <p class="plan-description">${plan.description}</p>
+          <ul class="plan-features">
+            ${plan.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
+          </ul>
+          <div class="price">${plan.price}€<span>/anno</span></div>
+          <button class="btn-plan" onclick="subscribe('${plan.name}', ${plan.price})">
+            Scegli questo piano
+          </button>
+        `;
+        
+        plansContainer.appendChild(planCard);
+      });
+      
+      // Show plans section
+      document.getElementById('plansSection').classList.remove('hidden');
+      
+      // Scroll to plans
+      document.getElementById('plansSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function subscribe(planName, planPrice) {
+      selectedPlan = planName;
+      
+      // Hide plans section
+      document.getElementById('plansSection').classList.add('hidden');
+      
+      // Update confirmation message
+      const summary = document.getElementById('summary');
+      summary.innerHTML = `
+        <strong>${planName}</strong><br>
+        <span style="font-size: 1.2rem;">${planPrice}€/anno</span><br><br>
+        <small>Veicolo: ${currentVehicleType === 'EV' ? 'Elettrico' : currentVehicleType === 'HYBRID' ? 'Ibrido' : 'Termico'}</small>
+      `;
+      
+      // Show confirmation
+      document.getElementById('confirmation').classList.remove('hidden');
+      
+      // Scroll to confirmation
+      document.getElementById('confirmation').scrollIntoView({ behavior: 'smooth' });
+      
+      // In a real app, here you would send data to backend
+      console.log(`Subscription: ${planName} for ${currentVehicleType} vehicle`);
+    }
+
+    function resetFlow() {
+      // Reset all sections
+      document.getElementById('confirmation').classList.add('hidden');
+      document.getElementById('plansSection').classList.add('hidden');
+      document.getElementById('vehicleResult').classList.add('hidden');
+      
+      // Clear input
+      document.getElementById('plate').value = '';
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'warning' ? 'var(--warning)' : 'var(--success)'};
+        color: var(--dark);
+        padding: 16px 24px;
+        border-radius: 12px;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+        font-weight: 600;
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.animation = 'fadeIn 0.3s ease reverse';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // Add Enter key support for plate input
+    document.getElementById('plate').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        detectVehicle();
+      }
+    });
+
+    // Format plate input (uppercase, no spaces)
+    document.getElementById('plate').addEventListener('input', function(e) {
+      this.value = this.value.toUpperCase().replace(/\s/g, '');
+    });
+  </script>
 </body>
 </html>
