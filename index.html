@@ -3,31 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoCare | Maintenance as a Service</title>
+  <title>AutoCare Pro | Piattaforma Manutenzione & Ricambi</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://js.stripe.com/v3/"></script>
   <style>
-    /* === CSS MIGLIORATO CON SEZIONE PAGAMENTI === */
+    /* === CSS ESPANSO PER PIATTAFORMA MULTI-SERVIZIO === */
     :root {
       --primary: #4fd1ff;
       --primary-dark: #0066ff;
       --secondary: #00ff9d;
       --accent: #ff4fd6;
       --warning: #ffaa00;
-      --success: #00cc88;
+      --danger: #ff5555;
       --dark-bg: #02010a;
       --darker: #0a0f2c;
       --card-bg: rgba(20, 25, 60, 0.7);
-      --glass: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.15);
       --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      --gradient-hover: linear-gradient(135deg, #5fd8ff, #0077ff);
       --gradient-ev: linear-gradient(135deg, #00ff9d, #00cc7a);
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      --shadow-glow: 0 0 30px rgba(79, 209, 255, 0.3);
-      --shadow-glow-ev: 0 0 30px rgba(0, 255, 157, 0.3);
+      --gradient-china: linear-gradient(135deg, #ff3366, #ff9900);
     }
 
     * {
@@ -36,931 +30,1189 @@
       padding: 0;
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-
-    @keyframes shimmer {
-      0% { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
-
     body {
       font-family: 'Inter', sans-serif;
-      background: 
-        radial-gradient(ellipse at 20% 20%, rgba(79, 209, 255, 0.1) 0%, transparent 40%),
-        radial-gradient(ellipse at 80% 80%, rgba(0, 255, 157, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at top, var(--darker), var(--dark-bg));
-      color: #fff;
+      background: var(--dark-bg);
+      color: white;
       min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    /* HEADER */
-    header {
-      padding: 30px 0;
+    /* === NAVBAR ESPANSA === */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 40px;
-      animation: slideIn 0.8s ease-out;
+      position: sticky;
+      top: 0;
+      background: rgba(10, 15, 44, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
     }
 
     .logo {
       display: flex;
       align-items: center;
       gap: 15px;
-      justify-content: center;
-    }
-
-    .logo-icon {
-      width: 50px;
-      height: 50px;
-      background: var(--gradient);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
     }
 
     .logo h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 800;
+      font-size: 2rem;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
-    .tagline {
-      text-align: center;
-      margin-top: 10px;
-      opacity: 0.8;
-      letter-spacing: 3px;
-      font-size: 0.9rem;
-      text-transform: uppercase;
+    .nav-links {
+      display: flex;
+      gap: 30px;
     }
 
-    /* HERO */
-    .hero {
-      text-align: center;
-      padding: 40px 0 60px;
-      max-width: 800px;
-      margin: 0 auto;
-      animation: slideIn 1s ease-out 0.2s both;
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .hero h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3rem;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 20px;
-    }
-
-    .hero span {
+    .nav-link:hover {
+      background: rgba(79, 209, 255, 0.1);
       color: var(--primary);
-      position: relative;
     }
 
-    .hero span::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 100%;
-      height: 2px;
+    .nav-link.active {
       background: var(--gradient);
+      color: white;
     }
 
-    .hero p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
+    /* === DASHBOARD LATERALE === */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 30px;
+      margin-top: 30px;
     }
 
-    /* CARDS */
-    .card {
+    .sidebar {
       background: var(--card-bg);
-      backdrop-filter: blur(15px);
-      border: 1px solid var(--glass-border);
       border-radius: 20px;
-      padding: 40px;
-      max-width: 600px;
-      margin: 30px auto;
-      box-shadow: var(--shadow);
-      animation: slideIn 1s ease-out 0.4s both;
+      padding: 25px;
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 30px;
+    }
+
+    .sidebar-section h3 {
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 15px;
+      color: var(--primary);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .category-list {
+      list-style: none;
+    }
+
+    .category-item {
+      padding: 12px 15px;
+      margin: 5px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-item:hover {
+      background: rgba(79, 209, 255, 0.1);
+    }
+
+    .category-item.active {
+      background: var(--gradient);
+      color: white;
+    }
+
+    .category-badge {
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+
+    .badge-ev { background: rgba(0, 255, 157, 0.2); color: var(--secondary); }
+    .badge-ice { background: rgba(79, 209, 255, 0.2); color: var(--primary); }
+    .badge-china { background: rgba(255, 51, 102, 0.2); color: #ff3366; }
+    .badge-new { background: rgba(255, 170, 0, 0.2); color: var(--warning); }
+
+    /* === GRIGLIA PRODOTTI === */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .product-image {
+      height: 200px;
+      background: linear-gradient(45deg, #0a0f2c, #151a28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
       overflow: hidden;
     }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--gradient);
+    .product-image img {
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+      transition: transform 0.5s;
     }
 
-    .card label {
-      display: block;
+    .product-card:hover .product-image img {
+      transform: scale(1.1);
+    }
+
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-title {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* INPUT */
-    input {
-      width: 100%;
-      padding: 16px 20px;
-      border-radius: 12px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      margin: 15px 0;
-      font-size: 1rem;
-      background: rgba(0, 0, 0, 0.3);
-      color: white;
-      font-family: 'Orbitron', monospace;
-      letter-spacing: 2px;
-      transition: all 0.3s ease;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 209, 255, 0.2);
-    }
-
-    /* BUTTONS */
-    .btn-primary {
-      background: var(--gradient);
-      color: white;
-      border: none;
-      padding: 16px 32px;
-      border-radius: 12px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      width: 100%;
-      margin-top: 20px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
-    }
-
-    /* VEHICLE RESULT */
-    #vehicleResult {
-      text-align: center;
-    }
-
-    .vehicle-icon {
-      font-size: 48px;
-      color: var(--primary);
-      margin-bottom: 20px;
-    }
-
-    #vehicleType {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.4rem;
-      color: var(--secondary);
-      padding: 12px 24px;
-      background: rgba(0, 255, 157, 0.1);
-      border-radius: 12px;
-      display: inline-block;
-      margin: 20px 0;
-      border: 2px solid var(--secondary);
-    }
-
-    /* PLANS */
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-      animation: slideIn 1s ease-out 0.6s both;
-    }
-
-    .plan {
-      background: rgba(30, 35, 70, 0.7);
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-
-    .plan:hover {
-      transform: translateY(-5px);
-      border-color: var(--primary);
-      box-shadow: var(--shadow), var(--shadow-glow);
-    }
-
-    .plan.highlight {
-      border: 2px solid var(--primary);
-      transform: scale(1.03);
-      box-shadow: var(--shadow), var(--shadow-glow);
-    }
-
-    .plan.ev {
-      border: 2px solid var(--secondary);
-    }
-
-    .plan h4 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       margin-bottom: 10px;
     }
 
-    .price {
+    .product-description {
+      opacity: 0.8;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .product-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .spec {
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .product-price {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 700;
-      display: block;
-      margin: 15px 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .btn-add-to-cart {
       background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s;
     }
 
-    .plan.ev .price {
-      background: var(--gradient-ev);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .btn-add-to-cart:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(79, 209, 255, 0.3);
     }
 
-    /* PAGAMENTI SECTION - NUOVA */
-    #paymentSection {
-      max-width: 800px;
-      margin: 40px auto;
-      animation: slideIn 0.8s ease-out;
+    /* === CARRELLO FLOTTANTE === */
+    .cart-floating {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--gradient);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s;
     }
 
-    .payment-header {
+    .cart-floating:hover {
+      transform: translateY(-5px);
+    }
+
+    .cart-count {
+      background: white;
+      color: var(--primary-dark);
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    /* === MODALE CARRELLO === */
+    .cart-modal {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100vh;
+      background: var(--darker);
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s ease-in-out;
+      z-index: 1001;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .cart-modal.open {
+      right: 0;
+    }
+
+    .cart-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
     }
 
-    .payment-header h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
+    .cart-items {
+      max-height: 60vh;
+      overflow-y: auto;
     }
 
-    .amount-display {
-      background: rgba(0, 255, 157, 0.1);
-      padding: 12px 24px;
+    .cart-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cart-item-image {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-item-details {
+      flex: 1;
+    }
+
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-total {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid var(--primary);
+    }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 15px;
+      background: var(--gradient);
+      color: white;
+      border: none;
       border-radius: 12px;
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
-      color: var(--secondary);
-      border: 2px solid var(--secondary);
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s;
     }
 
-    .payment-methods {
+    .btn-checkout:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(79, 209, 255, 0.3);
+    }
+
+    /* === SEZIONI SPECIALI === */
+    .hero-banner {
+      background: linear-gradient(rgba(10, 15, 44, 0.9), rgba(10, 15, 44, 0.9)), 
+                  url('https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+      background-size: cover;
+      border-radius: 25px;
+      padding: 60px 40px;
+      margin: 40px 0;
+      text-align: center;
+    }
+
+    .hero-banner h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
-      margin-bottom: 30px;
+      margin: 40px 0;
     }
 
-    .payment-method {
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid transparent;
-      border-radius: 15px;
+    .stat-card {
+      background: var(--card-bg);
       padding: 25px;
+      border-radius: 15px;
       text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
     }
 
-    .payment-method:hover {
-      background: rgba(79, 209, 255, 0.1);
-      border-color: var(--primary);
-    }
-
-    .payment-method.selected {
-      background: rgba(79, 209, 255, 0.15);
-      border-color: var(--primary);
-      box-shadow: 0 0 20px rgba(79, 209, 255, 0.2);
-    }
-
-    .payment-icon {
-      font-size: 40px;
-      color: var(--primary);
-    }
-
-    .payment-icon.card { color: #00ff9d; }
-    .payment-icon.paypal { color: #009cde; }
-    .payment-icon.apple { color: #ffffff; }
-    .payment-icon.google { color: #ea4335; }
-
-    /* STRIPE ELEMENTI */
-    .stripe-element {
-      background: rgba(0, 0, 0, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin: 20px 0;
-      transition: all 0.3s ease;
-    }
-
-    .stripe-element.focused {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 209, 255, 0.2);
-    }
-
-    .payment-details {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .form-group label {
+    .stat-number {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      font-size: 2.5rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
     }
 
-    /* CONFIRMATION */
-    #confirmation {
-      text-align: center;
-      border: 2px solid var(--secondary);
-      box-shadow: var(--shadow), var(--shadow-glow-ev);
-    }
-
-    .confirmation-icon {
-      font-size: 60px;
-      color: var(--secondary);
-      margin-bottom: 20px;
-      animation: pulse 2s infinite;
-    }
-
-    .confirmation-details {
-      background: rgba(0, 255, 157, 0.1);
-      border-radius: 15px;
-      padding: 25px;
-      margin: 25px 0;
-      border: 1px solid rgba(0, 255, 157, 0.2);
-    }
-
-    #transactionId {
-      font-family: 'Orbitron', monospace;
-      letter-spacing: 1px;
-      color: var(--primary);
-      margin-top: 10px;
-      display: block;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 40px 0;
-      margin-top: 60px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      opacity: 0.7;
-      font-size: 0.9rem;
-    }
-
-    .payment-security {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 20px;
-      opacity: 0.8;
-    }
-
-    .security-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-    }
-
-    /* UTILITY */
-    .hidden {
-      display: none !important;
-    }
-
-    .loading {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: var(--primary);
-      animation: spin 1s ease-in-out infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .plans, .payment-methods, .payment-details {
+    /* === RESPONSIVE === */
+    @media (max-width: 1024px) {
+      .dashboard {
         grid-template-columns: 1fr;
       }
       
-      .hero h2 {
-        font-size: 2.2rem;
+      .sidebar {
+        position: static;
       }
       
-      .logo h1 {
-        font-size: 2.2rem;
+      .cart-modal {
+        width: 100%;
+        right: -100%;
       }
-      
-      .payment-header {
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
         flex-direction: column;
         gap: 20px;
-        text-align: center;
+      }
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- HEADER -->
-    <header>
+    <!-- NAVBAR COMPLETA -->
+    <nav class="navbar">
       <div class="logo">
-        <div class="logo-icon">
-          <i class="fas fa-car"></i>
-        </div>
-        <h1>AutoCare</h1>
-      </div>
-      <div class="tagline">Maintenance as a Service</div>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero">
-      <h2>La manutenzione dell'auto<br><span>entra nel futuro</span></h2>
-      <p>Abbonamenti intelligenti per auto termiche ed elettriche</p>
-    </section>
-
-    <!-- INPUT CARD -->
-    <section class="card" id="inputSection">
-      <label for="plate"><i class="fas fa-search"></i> INSERISCI LA TARGA</label>
-      <input type="text" id="plate" placeholder="AB123CD" maxlength="7">
-      <button class="btn-primary" onclick="detectVehicle()">
-        <i class="fas fa-bolt"></i> Analizza veicolo
-      </button>
-    </section>
-
-    <!-- VEHICLE RESULT -->
-    <section class="card hidden" id="vehicleResult">
-      <div class="vehicle-icon">
-        <i class="fas fa-car-side"></i>
-      </div>
-      <h3>Veicolo rilevato</h3>
-      <div id="vehicleType"></div>
-      <button class="btn-primary" onclick="showPlans()">
-        <i class="fas fa-arrow-right"></i> Continua
-      </button>
-    </section>
-
-    <!-- PLANS -->
-    <section class="plans hidden" id="plans">
-      <!-- I piani saranno generati dinamicamente -->
-    </section>
-
-    <!-- SEZIONE PAGAMENTO (NUOVA) -->
-    <section class="card hidden" id="paymentSection">
-      <div class="payment-header">
-        <h3><i class="fas fa-credit-card"></i> Completamento Pagamento</h3>
-        <div class="amount-display" id="paymentAmount">€0</div>
+        <i class="fas fa-car" style="color: var(--primary); font-size: 1.8rem;"></i>
+        <h1>AutoCare Pro</h1>
       </div>
       
-      <div class="payment-methods">
-        <div class="payment-method" onclick="selectPaymentMethod('card')" id="cardMethod">
-          <i class="payment-icon card fas fa-credit-card"></i>
-          <div>
-            <strong>Carta di Credito</strong>
-            <p>Visa, Mastercard, American Express</p>
+      <div class="nav-links">
+        <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+          <i class="fas fa-home"></i> Dashboard
+        </a>
+        <a href="#abbonamenti" class="nav-link" onclick="showSection('abbonamenti')">
+          <i class="fas fa-sync-alt"></i> Abbonamenti
+        </a>
+        <a href="#ricambi" class="nav-link" onclick="showSection('ricambi')">
+          <i class="fas fa-cogs"></i> Ricambi
+        </a>
+        <a href="#auto-nuove" class="nav-link" onclick="showSection('auto-nuove')">
+          <i class="fas fa-bolt"></i> Auto Elettriche
+        </a>
+        <a href="#cinese" class="nav-link" onclick="showSection('cinese')">
+          <i class="fas fa-flag"></i> Made in China
+        </a>
+        <a href="#assistenza" class="nav-link" onclick="showSection('assistenza')">
+          <i class="fas fa-headset"></i> Assistenza
+        </a>
+      </div>
+      
+      <div class="cart-floating" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
+        <span>Carrello</span>
+      </div>
+    </nav>
+
+    <!-- MODALE CARRELLO -->
+    <div class="cart-modal" id="cartModal">
+      <div class="cart-header">
+        <h2><i class="fas fa-shopping-cart"></i> Il tuo carrello</h2>
+        <button onclick="toggleCart()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="cart-items" id="cartItems">
+        <!-- Elementi carrello dinamici -->
+      </div>
+      
+      <div class="cart-total">
+        <h3>Totale: <span id="cartTotal">€0.00</span></h3>
+        <button class="btn-checkout" onclick="checkout()">
+          <i class="fas fa-lock"></i> Procedi al pagamento
+        </button>
+      </div>
+    </div>
+
+    <!-- SEZIONI DINAMICHE -->
+    <div id="contentSections">
+      <!-- DASHBOARD PRINCIPALE -->
+      <section id="dashboard" class="content-section active">
+        <div class="hero-banner">
+          <h2>Piattaforma Completa Auto<br>Manutenzione & Ricambi</h2>
+          <p>Abbonamenti, ricambi originali, auto elettriche e soluzioni cinesi in un'unica piattaforma</p>
+        </div>
+
+        <div class="dashboard">
+          <!-- SIDEBAR CATEGORIE -->
+          <div class="sidebar">
+            <div class="sidebar-section">
+              <h3><i class="fas fa-filter"></i> CATEGORIE</h3>
+              <ul class="category-list">
+                <li class="category-item active" onclick="filterProducts('all')">
+                  <i class="fas fa-th"></i> Tutti i prodotti
+                  <span class="category-badge badge-new">124</span>
+                </li>
+                <li class="category-item" onclick="filterProducts('ev')">
+                  <i class="fas fa-bolt"></i> Auto Elettriche
+                  <span class="category-badge badge-ev">28</span>
+                </li>
+                <li class="category-item" onclick="filterProducts('ice')">
+                  <i class="fas fa-gas-pump"></i> Ricambi Termici
+                  <span class="category-badge badge-ice">56</span>
+                </li>
+                <li class="category-item" onclick="filterProducts('china')">
+                  <i class="fas fa-flag"></i> Made in China
+                  <span class="category-badge badge-china">32</span>
+                </li>
+                <li class="category-item" onclick="filterProducts('maintenance')">
+                  <i class="fas fa-tools"></i> Kit Manutenzione
+                </li>
+                <li class="category-item" onclick="filterProducts('subscription')">
+                  <i class="fas fa-sync-alt"></i> Abbonamenti
+                </li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h3><i class="fas fa-car"></i> MARCA AUTO</h3>
+              <ul class="category-list">
+                <li class="category-item">Tesla</li>
+                <li class="category-item">BYD</li>
+                <li class="category-item">MG Motor</li>
+                <li class="category-item">Volkswagen</li>
+                <li class="category-item">Fiat</li>
+                <li class="category-item">BMW</li>
+                <li class="category-item">Mercedes</li>
+              </ul>
+            </div>
+
+            <div class="sidebar-section">
+              <h3><i class="fas fa-tags"></i> OFFERTE</h3>
+              <ul class="category-list">
+                <li class="category-item">
+                  <i class="fas fa-fire" style="color: #ff3366;"></i> Flash Sale
+                </li>
+                <li class="category-item">
+                  <i class="fas fa-shipping-fast" style="color: #00ff9d;"></i> Spedizione Gratis
+                </li>
+                <li class="category-item">
+                  <i class="fas fa-percentage" style="color: #ffaa00;"></i> Sconti Fino al 40%
+                </li>
+              </ul>
+            </div>
           </div>
+
+          <!-- GRIGLIA PRODOTTI -->
+          <div class="main-content">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number">1.2K+</div>
+                <p>Ricambi in catalogo</p>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">45</div>
+                <p>Modelli EV disponibili</p>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">28</div>
+                <p>Brand cinesi certificati</p>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">2.4K</div>
+                <p>Clienti soddisfatti</p>
+              </div>
+            </div>
+
+            <h2 style="margin: 30px 0 20px;">Prodotti in evidenza</h2>
+            <div class="products-grid" id="productsGrid">
+              <!-- Prodotti caricati dinamicamente -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEZIONE ABBONAMENTI -->
+      <section id="abbonamenti" class="content-section">
+        <div class="hero-banner" style="background: linear-gradient(rgba(10, 15, 44, 0.9), rgba(10, 15, 44, 0.9)), url('https://images.unsplash.com/photo-1563720223488-8f2f62a6e71a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+          <h2>Abbonamenti Manutenzione</h2>
+          <p>Piani personalizzati per ogni tipo di veicolo</p>
         </div>
         
-        <div class="payment-method" onclick="selectPaymentMethod('paypal')" id="paypalMethod">
-          <i class="payment-icon paypal fab fa-paypal"></i>
-          <div>
-            <strong>PayPal</strong>
-            <p>Pagamento rapido e sicuro</p>
-          </div>
+        <div class="plans-grid" id="subscriptionsGrid" style="margin: 40px 0;">
+          <!-- Abbonamenti caricati dinamicamente -->
+        </div>
+      </section>
+
+      <!-- SEZIONE AUTO ELETTRICHE -->
+      <section id="auto-nuove" class="content-section">
+        <div class="hero-banner" style="background: linear-gradient(rgba(10, 15, 44, 0.9), rgba(10, 15, 44, 0.9)), url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+          <h2>Auto Elettriche & Ibride</h2>
+          <p>Novità 2024-2025 con consegna in 30 giorni</p>
         </div>
         
-        <div class="payment-method" onclick="selectPaymentMethod('apple')" id="appleMethod">
-          <i class="payment-icon apple fab fa-apple"></i>
-          <div>
-            <strong>Apple Pay</strong>
-            <p>Per dispositivi Apple</p>
-          </div>
+        <div class="cars-grid" id="evCarsGrid" style="margin: 40px 0;">
+          <!-- Auto elettriche caricate dinamicamente -->
+        </div>
+      </section>
+
+      <!-- SEZIONE MADE IN CHINA -->
+      <section id="cinese" class="content-section">
+        <div class="hero-banner" style="background: linear-gradient(rgba(10, 15, 44, 0.9), rgba(10, 15, 44, 0.9)), url('https://images.unsplash.com/photo-1601042879364-f3947d1f9fc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+          <h2>Made in China - Premium Quality</h2>
+          <p>Ricambi certificati per auto cinesi e non solo</p>
         </div>
         
-        <div class="payment-method" onclick="selectPaymentMethod('google')" id="googleMethod">
-          <i class="payment-icon google fab fa-google"></i>
-          <div>
-            <strong>Google Pay</strong>
-            <p>Per dispositivi Android</p>
-          </div>
+        <div class="china-grid" id="chinaPartsGrid" style="margin: 40px 0;">
+          <!-- Ricambi cinesi caricati dinamicamente -->
         </div>
-      </div>
-
-      <!-- FORM CARTA DI CREDITO (Stripe Elements) -->
-      <div id="cardForm" class="hidden">
-        <div class="form-group">
-          <label for="card-element"><i class="fas fa-credit-card"></i> DETTAGLI CARTA</label>
-          <div id="card-element" class="stripe-element"></div>
-          <div id="card-errors" style="color: #ff5555; margin-top: 10px;"></div>
-        </div>
-
-        <div class="payment-details">
-          <div class="form-group">
-            <label for="cardholder-name"><i class="fas fa-user"></i> INTESTATARIO CARTA</label>
-            <input type="text" id="cardholder-name" placeholder="Mario Rossi">
-          </div>
-          
-          <div class="form-group">
-            <label for="email"><i class="fas fa-envelope"></i> EMAIL DI RICEVUTA</label>
-            <input type="email" id="email" placeholder="tu@email.com">
-          </div>
-        </div>
-
-        <button class="btn-primary" onclick="processPayment()" id="payButton">
-          <i class="fas fa-lock"></i> Paga ora
-        </button>
-      </div>
-
-      <!-- ALTRI METODI DI PAGAMENTO -->
-      <div id="paypalButton" class="hidden">
-        <button class="btn-primary" onclick="processPayPal()" style="background: linear-gradient(135deg, #009cde, #003087);">
-          <i class="fab fa-paypal"></i> Paga con PayPal
-        </button>
-      </div>
-
-      <div id="applePayButton" class="hidden">
-        <button class="btn-primary" onclick="processApplePay()" style="background: #000; color: white;">
-          <i class="fab fa-apple"></i> Paga con Apple Pay
-        </button>
-      </div>
-
-      <div id="googlePayButton" class="hidden">
-        <button class="btn-primary" onclick="processGooglePay()" style="background: #ea4335; color: white;">
-          <i class="fab fa-google"></i> Paga con Google Pay
-        </button>
-      </div>
-
-      <div style="margin-top: 30px; opacity: 0.7; text-align: center;">
-        <i class="fas fa-shield-alt"></i> Pagamento sicuro SSL 256-bit
-      </div>
-    </section>
-
-    <!-- CONFIRMATION -->
-    <section class="card hidden" id="confirmation">
-      <div class="confirmation-icon">
-        <i class="fas fa-check-circle"></i>
-      </div>
-      <h3>Abbonamento attivato!</h3>
-      <div class="confirmation-details">
-        <p id="summary"></p>
-        <p style="margin-top: 15px; font-size: 0.9rem;">
-          <strong>ID Transazione:</strong>
-          <span id="transactionId">TRX-2026-XXXX-XXXX</span>
-        </p>
-      </div>
-      <p>Riceverai una email con tutti i dettagli. Ti contatteremo per il primo intervento.</p>
-      <button class="btn-primary" onclick="resetFlow()" style="margin-top: 20px; background: rgba(255,255,255,0.1);">
-        <i class="fas fa-redo"></i> Torna alla home
-      </button>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <p>© 2026 AutoCare Platform – Europe Ready</p>
-      <div class="payment-security">
-        <div class="security-badge">
-          <i class="fas fa-lock"></i> <span>Pagamenti sicuri</span>
-        </div>
-        <div class="security-badge">
-          <i class="fas fa-shield-alt"></i> <span>Critografia SSL</span>
-        </div>
-        <div class="security-badge">
-          <i class="fas fa-check-circle"></i> <span>GDPR Compliant</span>
-        </div>
-      </div>
-    </footer>
+      </section>
+    </div>
   </div>
 
   <script>
-    // ===== STRIPE CONFIGURATION =====
-    // SOSTITUIRE CON LA TUA PUBLISHABLE KEY DI STRIPE
-    const stripe = Stripe('pk_test_51P...'); // TEST KEY - DA CAMBIARE
-    const elements = stripe.elements();
-    let cardElement;
+    // ===== DATABASE COMPLETO PRODOTTI =====
+    const productsDatabase = {
+      all: [
+        // AUTO ELETTRICHE
+        {
+          id: 'ev001',
+          name: 'BYD Seal Excellence',
+          category: 'ev',
+          type: 'auto',
+          price: 49900,
+          image: 'byd-seal.png',
+          description: 'Berlina elettrica premium, autonomia 520km, accelerazione 0-100 in 5.9s',
+          specs: ['520km WLTP', '313 CV', '5.9s 0-100', 'Bat. 82.5 kWh'],
+          badge: 'EV',
+          badgeColor: '#00ff9d',
+          brand: 'BYD',
+          delivery: '30 giorni',
+          warranty: '8 anni batteria'
+        },
+        {
+          id: 'ev002',
+          name: 'MG4 Electric',
+          category: 'ev',
+          type: 'auto',
+          price: 34900,
+          image: 'mg4.png',
+          description: 'Compact EV con piattaforma MSP, design sportivo',
+          specs: ['450km WLTP', '204 CV', '7.7s 0-100', 'Bat. 64 kWh'],
+          badge: 'BEST SELLER',
+          badgeColor: '#ff3366',
+          brand: 'MG Motor',
+          delivery: '15 giorni',
+          warranty: '7 anni'
+        },
+        {
+          id: 'ev003',
+          name: 'Tesla Model 3 RWD',
+          category: 'ev',
+          type: 'auto',
+          price: 45900,
+          image: 'tesla-model3.png',
+          description: 'Icona elettrica, tecnologia Autopilot, supercriche veloci',
+          specs: ['491km WLTP', '283 CV', '6.1s 0-100', 'Bat. 60 kWh'],
+          badge: 'SUPERCHARGER',
+          badgeColor: '#ffaa00',
+          brand: 'Tesla',
+          delivery: '45 giorni',
+          warranty: '8 anni/160k km'
+        },
 
-    // ===== DATI APP =====
-    let currentVehicleType = '';
-    let selectedPlan = null;
-    let selectedPaymentMethod = 'card';
-    let paymentIntentId = null;
+        // RICAMBI TERMICI EUROPEI
+        {
+          id: 'ice001',
+          name: 'Kit Distribuzione Completo',
+          category: 'ice',
+          type: 'ricambio',
+          price: 289,
+          image: 'kit-distribuzione.png',
+          description: 'Kit distribuzione completo per VW Golf 1.6 TDI',
+          specs: ['Compatibile VW/Audi', 'Gates Original', 'Cinghia + tenditori', 'Made in Germany'],
+          badge: 'OE QUALITY',
+          badgeColor: '#4fd1ff',
+          brand: 'Gates',
+          compatibility: 'VW, Audi, Seat, Skoda',
+          stock: 'Disponibile'
+        },
+        {
+          id: 'ice002',
+          name: 'Freni Brembo Kit',
+          category: 'ice',
+          type: 'ricambio',
+          price: 450,
+          image: 'freni-brembo.png',
+          description: 'Kit dischi e pastiglie anteriori Brembo',
+          specs: ['Dischi ventilati', 'Pastiglie sport', 'Per auto sportive', 'Made in Italy'],
+          badge: 'PERFORMANCE',
+          badgeColor: '#ff5555',
+          brand: 'Brembo',
+          compatibility: 'BMW, Mercedes, Audi',
+          stock: '24h'
+        },
 
-    // Database veicoli simulato
-    const vehicleDatabase = {
-      'AB123CD': { type: 'ICE', brand: 'Fiat', model: '500' },
-      'EF456GH': { type: 'EV', brand: 'Tesla', model: 'Model 3' },
-      'IJ789KL': { type: 'HYBRID', brand: 'Toyota', model: 'Prius' }
+        // RICAMBI CINESI
+        {
+          id: 'china001',
+          name: 'Batteria Litio 12V',
+          category: 'china',
+          type: 'ricambio',
+          price: 189,
+          image: 'batteria-litio.png',
+          description: 'Batteria al litio 12V per auto elettriche/ibride',
+          specs: ['Lifepo4', '5kg peso', '3000 cicli', 'CE certificato'],
+          badge: 'MADE IN CHINA',
+          badgeColor: '#ff9900',
+          brand: 'CATL',
+          compatibility: 'BYD, MG, NIO',
+          stock: 'Disponibile'
+        },
+        {
+          id: 'china002',
+          name: 'Display Touchscreen 10"',
+          category: 'china',
+          type: 'ricambio',
+          price: 320,
+          image: 'display-touch.png',
+          description: 'Display Android Auto/Apple CarPlay per qualsiasi auto',
+          specs: ['Android 12', '4GB RAM', '4G LTE', 'Retrofit universale'],
+          badge: 'SMART UPGRADE',
+          badgeColor: '#00ff9d',
+          brand: 'Joying',
+          compatibility: 'Universale',
+          stock: 'Disponibile'
+        },
+
+        // ABBONAMENTI
+        {
+          id: 'sub001',
+          name: 'EV Care Plus',
+          category: 'subscription',
+          type: 'abbonamento',
+          price: 129,
+          image: 'ev-care.png',
+          description: 'Manutenzione completa auto elettriche',
+          specs: ['2 controlli batteria/anno', 'Sostituzione fluidi', 'Diagnostica annuale', 'Assistenza 24/7'],
+          badge: 'ABBONAMENTO',
+          badgeColor: '#0066ff',
+          brand: 'AutoCare',
+          duration: '12 mesi',
+          includes: ['Batteria check', 'Sistemi EV', 'Freni rigenerativi']
+        },
+        {
+          id: 'sub002',
+          name: 'Full Protection',
+          category: 'subscription',
+          type: 'abbonamento',
+          price: 89,
+          image: 'full-protection.png',
+          description: 'Protezione totale per auto termiche',
+          specs: ['2 cambi olio', 'Controllo freni', 'Diagnostica computerizzata', 'Soccorso stradale'],
+          badge: 'POPOLARE',
+          badgeColor: '#ff3366',
+          brand: 'AutoCare',
+          duration: '12 mesi',
+          includes: ['Olio e filtri', 'Controlli sicurezza', 'Assistenza']
+        }
+      ]
     };
 
-    // Piani disponibili
-    const plansData = [
-      { name: 'Oil Basic', type: 'ICE', price: 79, desc: '1 cambio olio / anno' },
-      { name: 'Oil Plus', type: 'ICE', price: 119, desc: '2 cambi + filtri', highlight: true },
-      { name: 'EV Care', type: 'EV', price: 129, desc: 'Check EV & fluidi', ev: true }
-    ];
+    // ===== CARRELLO =====
+    let cart = JSON.parse(localStorage.getItem('autocare_cart')) || [];
 
-    // ===== FUNZIONI PRINCIPALI =====
-    function detectVehicle() {
-      const plate = document.getElementById('plate').value.toUpperCase();
-      
-      if (!plate) {
-        alert("Inserisci una targa valida");
-        return;
-      }
+    // ===== INIZIALIZZAZIONE =====
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProducts();
+      updateCartDisplay();
+      initializeFilters();
+      loadSubscriptions();
+      loadEVCars();
+      loadChinaParts();
+    });
 
-      // Simula chiamata API
-      setTimeout(() => {
-        let vehicleInfo;
-        if (vehicleDatabase[plate]) {
-          vehicleInfo = vehicleDatabase[plate];
-        } else {
-          vehicleInfo = { type: Math.random() > 0.5 ? 'ICE / IBRIDA' : 'EV' };
-        }
-
-        currentVehicleType = vehicleInfo.type;
-        
-        document.getElementById('vehicleType').innerHTML = `
-          <strong>Tipo veicolo:</strong> ${currentVehicleType}<br>
-          ${vehicleInfo.brand ? `<small>${vehicleInfo.brand} ${vehicleInfo.model}</small>` : ''}
-        `;
-        
-        document.getElementById('vehicleResult').classList.remove('hidden');
-        document.getElementById('vehicleResult').scrollIntoView({ behavior: 'smooth' });
-      }, 800);
-    }
-
-    function showPlans() {
-      document.getElementById('vehicleResult').classList.add('hidden');
-      
-      const plansContainer = document.getElementById('plans');
-      plansContainer.innerHTML = '';
-      
-      plansData.forEach(plan => {
-        const planDiv = document.createElement('div');
-        planDiv.className = `plan ${plan.highlight ? 'highlight' : ''} ${plan.ev ? 'ev' : ''}`;
-        
-        planDiv.innerHTML = `
-          <h4>${plan.name}</h4>
-          <p>${plan.desc}</p>
-          <span class="price">${plan.price}€</span>
-          <button onclick="selectPlan('${plan.name}', ${plan.price})">
-            ${plan.ev ? '🔋 ' : '⛽ '}Abbonati
-          </button>
-        `;
-        
-        plansContainer.appendChild(planDiv);
+    // ===== GESTIONE SEZIONI =====
+    function showSection(sectionId) {
+      // Aggiorna navbar
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
       });
+      event.target.classList.add('active');
       
-      plansContainer.classList.remove('hidden');
-      plansContainer.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function selectPlan(planName, price) {
-      selectedPlan = { name: planName, price: price };
-      
-      // Mostra sezione pagamento
-      document.getElementById('plans').classList.add('hidden');
-      document.getElementById('paymentSection').classList.remove('hidden');
-      
-      // Aggiorna importo
-      document.getElementById('paymentAmount').textContent = `${price}€`;
-      
-      // Inizializza Stripe Elements per pagamento con carta
-      if (!cardElement) {
-        cardElement = elements.create('card', {
-          style: {
-            base: {
-              fontSize: '16px',
-              color: '#ffffff',
-              '::placeholder': { color: '#a0a0a0' }
-            }
-          }
-        });
-        cardElement.mount('#card-element');
-        
-        cardElement.on('change', (event) => {
-          const displayError = document.getElementById('card-errors');
-          if (event.error) {
-            displayError.textContent = event.error.message;
-          } else {
-            displayError.textContent = '';
-          }
-        });
-      }
-      
-      // Seleziona di default carta di credito
-      selectPaymentMethod('card');
-      
-      document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function selectPaymentMethod(method) {
-      selectedPaymentMethod = method;
-      
-      // Rimuovi selected da tutti
-      ['cardMethod', 'paypalMethod', 'appleMethod', 'googleMethod'].forEach(id => {
-        document.getElementById(id).classList.remove('selected');
+      // Mostra sezione
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
       });
-      
-      // Aggiungi selected al metodo scelto
-      document.getElementById(method + 'Method').classList.add('selected');
-      
-      // Mostra solo il form relativo
-      ['cardForm', 'paypalButton', 'applePayButton', 'googlePayButton'].forEach(id => {
-        document.getElementById(id).classList.add('hidden');
-      });
-      
-      document.getElementById(method === 'card' ? 'cardForm' : method + 'Button').classList.remove('hidden');
-    }
-
-    // ===== FUNZIONI DI PAGAMENTO REALI =====
-    async function processPayment() {
-      const payButton = document.getElementById('payButton');
-      const cardholderName = document.getElementById('cardholder-name').value;
-      const email = document.getElementById('email').value;
-      
-      if (!cardholderName || !email) {
-        alert("Compila tutti i campi richiesti");
-        return;
-      }
-      
-      payButton.innerHTML = '<span class="loading"></span> Elaborazione pagamento...';
-      payButton.disabled = true;
-      
-      try {
-        // 1. CREA PAYMENT INTENT (backend call simulato)
-        // In produzione, qui chiameresti il tuo backend:
-        // const response = await fetch('/create-payment-intent', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({ amount: selectedPlan.price * 100, currency: 'eur' })
-        // });
-        // const { clientSecret } = await response.json();
-        
-        // Simuliamo la risposta
-        const clientSecret = 'pi_3OgE..._simulato'; // Sostituire con client secret reale
-        
-        // 2. CONFERMA PAGAMENTO
-        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: cardElement,
-            billing_details: { name: cardholderName, email: email }
-          }
-        });
-        
-        if (error) {
-          throw new Error(error.message);
-        }
-        
-        // 3. PAGAMENTO RIUSCITO
-        paymentIntentId = paymentIntent.id;
-        showConfirmation();
-        
-      } catch (error) {
-        alert(`Errore nel pagamento: ${error.message}`);
-        payButton.innerHTML = '<i class="fas fa-lock"></i> Paga ora';
-        payButton.disabled = false;
-      }
-    }
-
-    function processPayPal() {
-      // In produzione: reindirizza a PayPal o usa PayPal JS SDK
-      alert("Reindirizzamento a PayPal... (simulato)");
-      
-      // Simula pagamento riuscito dopo 2 secondi
-      setTimeout(() => {
-        paymentIntentId = 'PAYPAL-' + Date.now();
-        showConfirmation();
-      }, 2000);
-    }
-
-    function processApplePay() {
-      if (!window.ApplePaySession) {
-        alert("Apple Pay non disponibile su questo dispositivo");
-        return;
-      }
-      
-      alert("Apple Pay attivato... (simulato)");
-      setTimeout(() => {
-        paymentIntentId = 'APPLE-' + Date.now();
-        showConfirmation();
-      }, 2000);
-    }
-
-    function processGooglePay() {
-      if (!window.PaymentRequest) {
-        alert("Google Pay non disponibile su questo dispositivo");
-        return;
-      }
-      
-      alert("Google Pay attivato... (simulato)");
-      setTimeout(() => {
-        paymentIntentId = 'GOOGLE-' + Date.now();
-        showConfirmation();
-      }, 2000);
-    }
-
-    function showConfirmation() {
-      document.getElementById('paymentSection').classList.add('hidden');
-      
-      document.getElementById('summary').innerHTML = `
-        <strong>${selectedPlan.name}</strong><br>
-        Importo: <strong>${selectedPlan.price}€</strong><br>
-        Metodo: <strong>${selectedPaymentMethod.toUpperCase()}</strong><br>
-        Data: <strong>${new Date().toLocaleDateString('it-IT')}</strong>
-      `;
-      
-      document.getElementById('transactionId').textContent = paymentIntentId || 'TRX-' + Date.now();
-      document.getElementById('confirmation').classList.remove('hidden');
-      document.getElementById('confirmation').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function resetFlow() {
-      // Reset tutte le sezioni
-      ['vehicleResult', 'plans', 'paymentSection', 'confirmation'].forEach(id => {
-        document.getElementById(id).classList.add('hidden');
-      });
-      
-      // Reset input
-      document.getElementById('plate').value = '';
+      document.getElementById(sectionId).classList.add('active');
       
       // Scroll to top
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      
-      // Reset variabili
-      selectedPlan = null;
-      selectedPaymentMethod = 'card';
-      paymentIntentId = null;
     }
 
-    // ===== SETUP INIZIALE =====
-    document.addEventListener('DOMContentLoaded', () => {
-      // Setup tasto Enter per analisi targa
-      document.getElementById('plate').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') detectVehicle();
+    // ===== CARICAMENTO PRODOTTI =====
+    function loadProducts(filter = 'all') {
+      const grid = document.getElementById('productsGrid');
+      if (!grid) return;
+      
+      let filteredProducts = productsDatabase.all;
+      
+      if (filter !== 'all') {
+        filteredProducts = productsDatabase.all.filter(p => p.category === filter);
+      }
+      
+      grid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card">
+          ${product.badge ? `<div class="product-badge" style="background: ${product.badgeColor}">${product.badge}</div>` : ''}
+          
+          <div class="product-image">
+            <i class="fas fa-${product.type === 'auto' ? 'car' : product.type === 'ricambio' ? 'cog' : 'sync-alt'}" 
+               style="font-size: 4rem; color: ${product.badgeColor || '#4fd1ff'}; opacity: 0.7;"></i>
+          </div>
+          
+          <div class="product-info">
+            <h3 class="product-title">${product.name}</h3>
+            <p class="product-description">${product.description}</p>
+            
+            <div class="product-specs">
+              ${product.specs.map(spec => `<span class="spec">${spec}</span>`).join('')}
+            </div>
+            
+            <div class="product-footer">
+              <div>
+                <div class="product-price">€${product.price.toLocaleString('it-IT')}</div>
+                <small style="opacity: 0.7;">${product.brand} • ${product.stock || product.delivery || product.duration}</small>
+              </div>
+              <button class="btn-add-to-cart" onclick="addToCart('${product.id}')">
+                <i class="fas fa-cart-plus"></i> Aggiungi
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ===== FILTRI =====
+    function initializeFilters() {
+      const filterItems = document.querySelectorAll('.category-item');
+      filterItems.forEach(item => {
+        item.addEventListener('click', function() {
+          filterItems.forEach(i => i.classList.remove('active'));
+          this.classList.add('active');
+          
+          const filter = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+          loadProducts(filter);
+        });
       });
-    });
+    }
+
+    // ===== CARICAMENTO SEZIONI SPECIALI =====
+    function loadSubscriptions() {
+      const grid = document.getElementById('subscriptionsGrid');
+      if (!grid) return;
+      
+      const subscriptions = productsDatabase.all.filter(p => p.category === 'subscription');
+      
+      grid.innerHTML = subscriptions.map(sub => `
+        <div class="product-card" style="max-width: 350px; margin: 0 auto;">
+          <div class="product-image" style="background: linear-gradient(45deg, #0066ff, #4fd1ff);">
+            <i class="fas fa-sync-alt" style="font-size: 5rem; color: white;"></i>
+          </div>
+          <div class="product-info">
+            <h3>${sub.name}</h3>
+            <p>${sub.description}</p>
+            <div class="price" style="font-size: 2.5rem; color: #4fd1ff;">€${sub.price}/anno</div>
+            <button class="btn-add-to-cart" onclick="addToCart('${sub.id}')" style="width: 100%;">
+              <i class="fas fa-shopping-cart"></i> Attiva abbonamento
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadEVCars() {
+      const grid = document.getElementById('evCarsGrid');
+      if (!grid) return;
+      
+      const evCars = productsDatabase.all.filter(p => p.category === 'ev');
+      
+      grid.innerHTML = evCars.map(car => `
+        <div class="product-card">
+          <div class="product-image" style="background: linear-gradient(45deg, #00cc7a, #00ff9d);">
+            <i class="fas fa-car" style="font-size: 5rem; color: white;"></i>
+          </div>
+          <div class="product-info">
+            <h3>${car.name}</h3>
+            <p>${car.description}</p>
+            <div style="margin: 15px 0;">
+              <strong>Consegna: ${car.delivery}</strong><br>
+              <strong>Garanzia: ${car.warranty}</strong>
+            </div>
+            <div class="product-footer">
+              <div class="product-price">€${car.price.toLocaleString('it-IT')}</div>
+              <button class="btn-add-to-cart" onclick="addToCart('${car.id}')">
+                <i class="fas fa-car"></i> Configura
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadChinaParts() {
+      const grid = document.getElementById('chinaPartsGrid');
+      if (!grid) return;
+      
+      const chinaParts = productsDatabase.all.filter(p => p.category === 'china');
+      
+      grid.innerHTML = chinaParts.map(part => `
+        <div class="product-card">
+          <div class="product-image" style="background: linear-gradient(45deg, #ff3366, #ff9900);">
+            <i class="fas fa-flag" style="font-size: 4rem; color: white;"></i>
+          </div>
+          <div class="product-info">
+            <h3>${part.name}</h3>
+            <p>${part.description}</p>
+            <div class="product-specs">
+              ${part.specs.map(spec => `<span class="spec">${spec}</span>`).join('')}
+            </div>
+            <div style="margin: 10px 0; font-size: 0.9rem;">
+              <i class="fas fa-check-circle" style="color: #00ff9d;"></i> Certificato CE<br>
+              <i class="fas fa-shipping-fast" style="color: #4fd1ff;"></i> ${part.stock}
+            </div>
+            <div class="product-footer">
+              <div class="product-price">€${part.price}</div>
+              <button class="btn-add-to-cart" onclick="addToCart('${part.id}')">
+                <i class="fas fa-shopping-cart"></i> Acquista
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ===== GESTIONE CARRELLO =====
+    function addToCart(productId) {
+      const product = productsDatabase.all.find(p => p.id === productId);
+      if (!product) return;
+      
+      const existingItem = cart.find(item => item.id === productId);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          ...product,
+          quantity: 1,
+          addedAt: new Date().toISOString()
+        });
+      }
+      
+      saveCart();
+      updateCartDisplay();
+      showNotification(`✅ ${product.name} aggiunto al carrello!`, 'success');
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      saveCart();
+      updateCartDisplay();
+      showNotification('🗑️ Prodotto rimosso dal carrello', 'warning');
+    }
+
+    function updateQuantity(productId, delta) {
+      const item = cart.find(item => item.id === productId);
+      if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+          removeFromCart(productId);
+        } else {
+          saveCart();
+          updateCartDisplay();
+        }
+      }
+    }
+
+    function saveCart() {
+      localStorage.setItem('autocare_cart', JSON.stringify(cart));
+    }
+
+    function updateCartDisplay() {
+      // Aggiorna contatore
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCount').textContent = totalItems;
+      
+      // Aggiorna modale carrello
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      
+      if (cartItems && cartTotal) {
+        if (cart.length === 0) {
+          cartItems.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 40px;">Il carrello è vuoto</p>';
+          cartTotal.textContent = '€0.00';
+        } else {
+          cartItems.innerHTML = cart.map(item => `
+            <div class="cart-item">
+              <div class="cart-item-image">
+                <i class="fas fa-${item.type === 'auto' ? 'car' : item.type === 'ricambio' ? 'cog' : 'sync-alt'}" 
+                   style="font-size: 2rem; color: #4fd1ff;"></i>
+              </div>
+              <div class="cart-item-details">
+                <h4>${item.name}</h4>
+                <p style="font-size: 0.9rem; opacity: 0.8;">${item.brand} • €${item.price}</p>
+                <div class="cart-item-quantity">
+                  <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                  <span>${item.quantity}</span>
+                  <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+                  <button onclick="removeFromCart('${item.id}')" style="margin-left: 20px; background: none; border: none; color: #ff5555; cursor: pointer;">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+          
+          const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+          cartTotal.textContent = `€${total.toLocaleString('it-IT', { minimumFractionDigits: 2 })}`;
+        }
+      }
+    }
+
+    function toggleCart() {
+      document.getElementById('cartModal').classList.toggle('open');
+      if (document.getElementById('cartModal').classList.contains('open')) {
+        updateCartDisplay();
+      }
+    }
+
+    // ===== CHECKOUT =====
+    async function checkout() {
+      if (cart.length === 0) {
+        showNotification('🛒 Il carrello è vuoto!', 'warning');
+        return;
+      }
+      
+      // Raggruppa prodotti per tipo
+      const subscriptions = cart.filter(item => item.type === 'abbonamento');
+      const products = cart.filter(item => item.type !== 'abbonamento');
+      
+      if (subscriptions.length > 0) {
+        // Per abbonamenti, usa il flusso esistente
+        showNotification('🔗 Reindirizzamento a checkout abbonamenti...', 'info');
+        // Qui potresti reindirizzare alla pagina checkout esistente
+        setTimeout(() => {
+          window.location.href = '#paymentSection';
+          toggleCart();
+        }, 1000);
+      } else {
+        // Per prodotti fisici, crea ordine
+        const orderId = 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+        
+        const orderData = {
+          orderId: orderId,
+          items: cart,
+          total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+          timestamp: new Date().toISOString()
+        };
+        
+        // Salva ordine nel localStorage (in produzione salveresti su backend)
+        localStorage.setItem('last_order', JSON.stringify(orderData));
+        
+        // Svuota carrello
+        cart = [];
+        saveCart();
+        updateCartDisplay();
+        
+        // Mostra conferma
+        showNotification(`🎉 Ordine #${orderId} creato! Ti contatteremo per la spedizione.`, 'success');
+        toggleCart();
+        
+        // Potresti reindirizzare a pagina riepilogo ordine
+        setTimeout(() => {
+          alert(`Ordine confermato!\nID: ${orderId}\nTotale: €${orderData.total}\n\nRiceverai una email con i dettagli di spedizione.`);
+        }, 500);
+      }
+    }
+
+    // ===== NOTIFICAZIONI =====
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: ${type === 'success' ? '#00cc88' : type === 'warning' ? '#ffaa00' : '#4fd1ff'};
+          color: white;
+          padding: 15px 25px;
+          border-radius: 10px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+          z-index: 10000;
+          animation: slideIn 0.3s ease-out;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          max-width: 400px;
+        ">
+          <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+          <span>${message}</span>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // ===== API INTEGRATION (ESEMPIO) =====
+    async function loadRealProductsFromAPI() {
+      try {
+        // Esempio chiamata API prodotti reali
+        const response = await fetch('https://api.tuo-backend.com/products', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer TUO_TOKEN',
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        const data = await response.json();
+        // Gestisci i dati reali...
+        
+      } catch (error) {
+        console.error('Errore caricamento prodotti:', error);
+        showNotification('⚠️ Errore nel caricamento prodotti', 'warning');
+      }
+    }
+
+    // ===== INTEGRAZIONE CON IL SISTEMA ESISTENTE =====
+    function integrateWithExistingSystem() {
+      // Qui puoi integrare con il codice esistente di pagamento Stripe
+      console.log('Sistema integrato con Stripe payments');
+      
+      // Esempio: quando un utente completa il checkout
+      // chiama la funzione processPayment() esistente
+    }
+
+    // ===== FUNZIONI ESPORTATE =====
+    window.showSection = showSection;
+    window.filterProducts = loadProducts;
+    window.addToCart = addToCart;
+    window.removeFromCart = removeFromCart;
+    window.updateQuantity = updateQuantity;
+    window.toggleCart = toggleCart;
+    window.checkout = checkout;
+    window.showNotification = showNotification;
   </script>
 </body>
 </html>
