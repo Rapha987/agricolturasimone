@@ -2,9 +2,8 @@ let vehicleTypeDetected = '';
 
 function detectVehicle() {
   const plate = document.getElementById('plate').value;
-  if (!plate) return alert("Inserisci una targa");
+  if (!plate) return alert("Inserisci una targa valida");
 
-  // SIMULAZIONE (poi API)
   vehicleTypeDetected = Math.random() > 0.5 ? 'ICE / IBRIDA' : 'EV';
 
   document.getElementById('vehicleType').innerText =
@@ -22,5 +21,5 @@ function subscribe(plan) {
   document.getElementById('confirmation').classList.remove('hidden');
 
   document.getElementById('summary').innerText =
-    `Hai attivato il piano: ${plan}`;
+    `Hai attivato il piano ${plan}. Ti contatteremo per il primo intervento.`;
 }
