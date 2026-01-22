@@ -2,56 +2,69 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>AutoCare Subscription</title>
+  <title>AutoCare | Subscription Platform</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-  <div class="app">
+<header>
+  <h1>AutoCare</h1>
+  <span>Maintenance as a Service</span>
+</header>
 
-    <h1>Gestione Manutenzione Auto</h1>
-    <p>Inserisci la targa e attiva il tuo piano</p>
+<section class="hero">
+  <h2>La manutenzione dell’auto<br><span>entra nel futuro</span></h2>
+  <p>Abbonamenti intelligenti per auto termiche ed elettriche</p>
+</section>
 
-    <!-- STEP 1 -->
-    <div class="card">
-      <label>Targa veicolo</label>
-      <input type="text" id="plate" placeholder="AB123CD">
-      <button onclick="detectVehicle()">Continua</button>
-    </div>
+<section class="card glass">
+  <label>Inserisci la targa</label>
+  <input type="text" id="plate" placeholder="AB123CD">
+  <button onclick="detectVehicle()">Analizza veicolo</button>
+</section>
 
-    <!-- STEP 2 -->
-    <div class="card hidden" id="vehicleResult">
-      <h3>Veicolo rilevato</h3>
-      <p id="vehicleType"></p>
-      <button onclick="showPlans()">Scegli piano</button>
-    </div>
+<section class="card glass hidden" id="vehicleResult">
+  <h3>Veicolo rilevato</h3>
+  <p id="vehicleType"></p>
+  <button onclick="showPlans()">Continua</button>
+</section>
 
-    <!-- STEP 3 -->
-    <div class="card hidden" id="plans">
-      <h3>Piani disponibili</h3>
+<section class="plans hidden" id="plans">
 
-      <div class="plan">
-        <h4>Oil Basic</h4>
-        <p>1 cambio olio / anno</p>
-        <strong>79 € / anno</strong>
-        <button onclick="subscribe('Oil Basic')">Attiva</button>
-      </div>
-
-      <div class="plan">
-        <h4>EV Care Plan</h4>
-        <p>Check EV + fluidi</p>
-        <strong>129 € / anno</strong>
-        <button onclick="subscribe('EV Care')">Attiva</button>
-      </div>
-    </div>
-
-    <!-- STEP 4 -->
-    <div class="card hidden" id="confirmation">
-      <h3>Abbonamento attivato</h3>
-      <p id="summary"></p>
-    </div>
-
+  <div class="plan">
+    <h4>Oil Basic</h4>
+    <p>1 cambio olio / anno</p>
+    <span class="price">79€</span>
+    <button onclick="subscribe('Oil Basic')">Abbonati</button>
   </div>
+
+  <div class="plan highlight">
+    <h4>Oil Plus</h4>
+    <p>2 cambi + filtri</p>
+    <span class="price">119€</span>
+    <button onclick="subscribe('Oil Plus')">Abbonati</button>
+  </div>
+
+  <div class="plan ev">
+    <h4>EV Care</h4>
+    <p>Check EV & fluidi</p>
+    <span class="price">129€</span>
+    <button onclick="subscribe('EV Care')">Abbonati</button>
+  </div>
+
+</section>
+
+<section class="card glass hidden" id="confirmation">
+  <h3>Abbonamento attivato</h3>
+  <p id="summary"></p>
+</section>
+
+<footer>
+  © 2026 AutoCare Platform – Europe Ready
+</footer>
 
 <script src="app.js"></script>
 </body>
