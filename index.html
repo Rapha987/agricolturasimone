@@ -1,1218 +1,897 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoCare Pro | Piattaforma Manutenzione & Ricambi</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://js.stripe.com/v3/"></script>
-  <style>
-    /* === CSS ESPANSO PER PIATTAFORMA MULTI-SERVIZIO === */
-    :root {
-      --primary: #4fd1ff;
-      --primary-dark: #0066ff;
-      --secondary: #00ff9d;
-      --accent: #ff4fd6;
-      --warning: #ffaa00;
-      --danger: #ff5555;
-      --dark-bg: #02010a;
-      --darker: #0a0f2c;
-      --card-bg: rgba(20, 25, 60, 0.7);
-      --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      --gradient-ev: linear-gradient(135deg, #00ff9d, #00cc7a);
-      --gradient-china: linear-gradient(135deg, #ff3366, #ff9900);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArteCNC - Bassorilievi in Legno Personalizzati</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        :root {
+            --primary: #8B5A2B;
+            --primary-dark: #654321;
+            --primary-light: #D2691E;
+            --secondary: #F5DEB3;
+            --accent: #A0522D;
+            --light: #FAF3E0;
+            --dark: #333333;
+            --gray: #7A7A7A;
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--dark-bg);
-      color: white;
-      min-height: 100vh;
-    }
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
 
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    /* === NAVBAR ESPANSA === */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      position: sticky;
-      top: 0;
-      background: rgba(10, 15, 44, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-    }
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
 
-    .logo h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 30px;
-    }
+        .logo i {
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
 
-    .nav-link {
-      color: white;
-      text-decoration: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
 
-    .nav-link:hover {
-      background: rgba(79, 209, 255, 0.1);
-      color: var(--primary);
-    }
+        .logo span {
+            color: var(--accent);
+        }
 
-    .nav-link.active {
-      background: var(--gradient);
-      color: white;
-    }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
 
-    /* === DASHBOARD LATERALE === */
-    .dashboard {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 30px;
-      margin-top: 30px;
-    }
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
 
-    .sidebar {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 25px;
-      height: fit-content;
-      position: sticky;
-      top: 100px;
-    }
+        nav a:hover {
+            color: var(--primary);
+        }
 
-    .sidebar-section {
-      margin-bottom: 30px;
-    }
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
 
-    .sidebar-section h3 {
-      font-family: 'Orbitron', sans-serif;
-      margin-bottom: 15px;
-      color: var(--primary);
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .category-list {
-      list-style: none;
-    }
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+        }
 
-    .category-item {
-      padding: 12px 15px;
-      margin: 5px 0;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1558&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
 
-    .category-item:hover {
-      background: rgba(79, 209, 255, 0.1);
-    }
+        .hero h2 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
 
-    .category-item.active {
-      background: var(--gradient);
-      color: white;
-    }
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--light);
+        }
 
-    .category-badge {
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 0.7rem;
-      font-weight: bold;
-    }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
 
-    .badge-ev { background: rgba(0, 255, 157, 0.2); color: var(--secondary); }
-    .badge-ice { background: rgba(79, 209, 255, 0.2); color: var(--primary); }
-    .badge-china { background: rgba(255, 51, 102, 0.2); color: #ff3366; }
-    .badge-new { background: rgba(255, 170, 0, 0.2); color: var(--warning); }
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
 
-    /* === GRIGLIA PRODOTTI === */
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 25px;
-    }
+        /* Sezioni */
+        section {
+            padding: 80px 0;
+        }
 
-    .product-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: all 0.3s;
-      border: 2px solid transparent;
-    }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
 
-    .product-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--primary);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-    }
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
 
-    .product-badge {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      padding: 5px 12px;
-      border-radius: 15px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      z-index: 2;
-    }
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
 
-    .product-image {
-      height: 200px;
-      background: linear-gradient(45deg, #0a0f2c, #151a28);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
+        /* Prodotti */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
 
-    .product-image img {
-      max-width: 80%;
-      max-height: 80%;
-      object-fit: contain;
-      transition: transform 0.5s;
-    }
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-    .product-card:hover .product-image img {
-      transform: scale(1.1);
-    }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
 
-    .product-info {
-      padding: 20px;
-    }
+        .product-image {
+            height: 220px;
+            overflow: hidden;
+        }
 
-    .product-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-    }
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
 
-    .product-description {
-      opacity: 0.8;
-      font-size: 0.9rem;
-      margin-bottom: 15px;
-      line-height: 1.5;
-    }
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
 
-    .product-specs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
+        .product-info {
+            padding: 20px;
+        }
 
-    .spec {
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      font-size: 0.8rem;
-    }
+        .product-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
 
-    .product-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 20px;
-    }
+        .product-info p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
 
-    .product-price {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: var(--primary);
-    }
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
 
-    .btn-add-to-cart {
-      background: var(--gradient);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
+        /* Personalizzazione */
+        .customization-section {
+            background-color: var(--light);
+        }
 
-    .btn-add-to-cart:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(79, 209, 255, 0.3);
-    }
+        .customization-steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
 
-    /* === CARRELLO FLOTTANTE === */
-    .cart-floating {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--gradient);
-      color: white;
-      padding: 15px 25px;
-      border-radius: 50px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      cursor: pointer;
-      z-index: 999;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      transition: all 0.3s;
-    }
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
 
-    .cart-floating:hover {
-      transform: translateY(-5px);
-    }
+        .step i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
 
-    .cart-count {
-      background: white;
-      color: var(--primary-dark);
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
+        .step h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
 
-    /* === MODALE CARRELLO === */
-    .cart-modal {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 400px;
-      height: 100vh;
-      background: var(--darker);
-      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
-      transition: right 0.3s ease-in-out;
-      z-index: 1001;
-      padding: 30px;
-      overflow-y: auto;
-    }
+        .customization-demo {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
 
-    .cart-modal.open {
-      right: 0;
-    }
+        .custom-preview {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
 
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
+        .preview-image {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            margin: 0 auto 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 1.2rem;
+        }
 
-    .cart-items {
-      max-height: 60vh;
-      overflow-y: auto;
-    }
+        .custom-options {
+            flex: 1;
+            min-width: 300px;
+        }
 
-    .cart-item {
-      display: flex;
-      gap: 15px;
-      padding: 15px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
+        .option-group {
+            margin-bottom: 25px;
+        }
 
-    .cart-item-image {
-      width: 80px;
-      height: 80px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .option-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
 
-    .cart-item-details {
-      flex: 1;
-    }
+        select, input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
 
-    .cart-item-quantity {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
 
-    .quantity-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .wood-types {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
 
-    .cart-total {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 2px solid var(--primary);
-    }
+        .wood-type {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-    .btn-checkout {
-      width: 100%;
-      padding: 15px;
-      background: var(--gradient);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.1rem;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: all 0.3s;
-    }
+        .wood-type.active {
+            border-color: var(--primary);
+            background-color: rgba(139, 90, 43, 0.1);
+        }
 
-    .btn-checkout:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(79, 209, 255, 0.3);
-    }
+        .wood-type img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
 
-    /* === SEZIONI SPECIALI === */
-    .hero-banner {
-      background: linear-gradient(rgba(10, 15, 44, 0.9), rgba(10, 15, 44, 0.9)), 
-                  url('https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-      background-size: cover;
-      border-radius: 25px;
-      padding: 60px 40px;
-      margin: 40px 0;
-      text-align: center;
-    }
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
 
-    .hero-banner h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin: 40px 0;
-    }
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
 
-    .stat-card {
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 15px;
-      text-align: center;
-    }
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
 
-    .stat-number {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-    }
+        .footer-column ul {
+            list-style: none;
+        }
 
-    /* === RESPONSIVE === */
-    @media (max-width: 1024px) {
-      .dashboard {
-        grid-template-columns: 1fr;
-      }
-      
-      .sidebar {
-        position: static;
-      }
-      
-      .cart-modal {
-        width: 100%;
-        right: -100%;
-      }
-    }
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
 
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        gap: 20px;
-      }
-      
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-light);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s;
+                z-index: 999;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 70px 0;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+            }
+            
+            .step {
+                min-width: 100%;
+            }
+            
+            .customization-demo {
+                padding: 25px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- NAVBAR COMPLETA -->
-    <nav class="navbar">
-      <div class="logo">
-        <i class="fas fa-car" style="color: var(--primary); font-size: 1.8rem;"></i>
-        <h1>AutoCare Pro</h1>
-      </div>
-      
-      <div class="nav-links">
-        <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
-          <i class="fas fa-home"></i> Dashboard
-        </a>
-        <a href="#abbonamenti" class="nav-link" onclick="showSection('abbonamenti')">
-          <i class="fas fa-sync-alt"></i> Abbonamenti
-        </a>
-        <a href="#ricambi" class="nav-link" onclick="showSection('ricambi')">
-          <i class="fas fa-cogs"></i> Ricambi
-        </a>
-        <a href="#auto-nuove" class="nav-link" onclick="showSection('auto-nuove')">
-          <i class="fas fa-bolt"></i> Auto Elettriche
-        </a>
-        <a href="#cinese" class="nav-link" onclick="showSection('cinese')">
-          <i class="fas fa-flag"></i> Made in China
-        </a>
-        <a href="#assistenza" class="nav-link" onclick="showSection('assistenza')">
-          <i class="fas fa-headset"></i> Assistenza
-        </a>
-      </div>
-      
-      <div class="cart-floating" onclick="toggleCart()">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count" id="cartCount">0</span>
-        <span>Carrello</span>
-      </div>
-    </nav>
-
-    <!-- MODALE CARRELLO -->
-    <div class="cart-modal" id="cartModal">
-      <div class="cart-header">
-        <h2><i class="fas fa-shopping-cart"></i> Il tuo carrello</h2>
-        <button onclick="toggleCart()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      
-      <div class="cart-items" id="cartItems">
-        <!-- Elementi carrello dinamici -->
-      </div>
-      
-      <div class="cart-total">
-        <h3>Totale: <span id="cartTotal">€0.00</span></h3>
-        <button class="btn-checkout" onclick="checkout()">
-          <i class="fas fa-lock"></i> Procedi al pagamento
-        </button>
-      </div>
-    </div>
-
-    <!-- SEZIONI DINAMICHE -->
-    <div id="contentSections">
-      <!-- DASHBOARD PRINCIPALE -->
-      <section id="dashboard" class="content-section active">
-        <div class="hero-banner">
-          <h2>Piattaforma Completa Auto<br>Manutenzione & Ricambi</h2>
-          <p>Abbonamenti, ricambi originali, auto elettriche e soluzioni cinesi in un'unica piattaforma</p>
-        </div>
-
-        <div class="dashboard">
-          <!-- SIDEBAR CATEGORIE -->
-          <div class="sidebar">
-            <div class="sidebar-section">
-              <h3><i class="fas fa-filter"></i> CATEGORIE</h3>
-              <ul class="category-list">
-                <li class="category-item active" onclick="filterProducts('all')">
-                  <i class="fas fa-th"></i> Tutti i prodotti
-                  <span class="category-badge badge-new">124</span>
-                </li>
-                <li class="category-item" onclick="filterProducts('ev')">
-                  <i class="fas fa-bolt"></i> Auto Elettriche
-                  <span class="category-badge badge-ev">28</span>
-                </li>
-                <li class="category-item" onclick="filterProducts('ice')">
-                  <i class="fas fa-gas-pump"></i> Ricambi Termici
-                  <span class="category-badge badge-ice">56</span>
-                </li>
-                <li class="category-item" onclick="filterProducts('china')">
-                  <i class="fas fa-flag"></i> Made in China
-                  <span class="category-badge badge-china">32</span>
-                </li>
-                <li class="category-item" onclick="filterProducts('maintenance')">
-                  <i class="fas fa-tools"></i> Kit Manutenzione
-                </li>
-                <li class="category-item" onclick="filterProducts('subscription')">
-                  <i class="fas fa-sync-alt"></i> Abbonamenti
-                </li>
-              </ul>
-            </div>
-
-            <div class="sidebar-section">
-              <h3><i class="fas fa-car"></i> MARCA AUTO</h3>
-              <ul class="category-list">
-                <li class="category-item">Tesla</li>
-                <li class="category-item">BYD</li>
-                <li class="category-item">MG Motor</li>
-                <li class="category-item">Volkswagen</li>
-                <li class="category-item">Fiat</li>
-                <li class="category-item">BMW</li>
-                <li class="category-item">Mercedes</li>
-              </ul>
-            </div>
-
-            <div class="sidebar-section">
-              <h3><i class="fas fa-tags"></i> OFFERTE</h3>
-              <ul class="category-list">
-                <li class="category-item">
-                  <i class="fas fa-fire" style="color: #ff3366;"></i> Flash Sale
-                </li>
-                <li class="category-item">
-                  <i class="fas fa-shipping-fast" style="color: #00ff9d;"></i> Spedizione Gratis
-                </li>
-                <li class="category-item">
-                  <i class="fas fa-percentage" style="color: #ffaa00;"></i> Sconti Fino al 40%
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- GRIGLIA PRODOTTI -->
-          <div class="main-content">
-            <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-number">1.2K+</div>
-                <p>Ricambi in catalogo</p>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number">45</div>
-                <p>Modelli EV disponibili</p>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number">28</div>
-                <p>Brand cinesi certificati</p>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number">2.4K</div>
-                <p>Clienti soddisfatti</p>
-              </div>
-            </div>
-
-            <h2 style="margin: 30px 0 20px;">Prodotti in evidenza</h2>
-            <div class="products-grid" id="productsGrid">
-              <!-- Prodotti caricati dinamicamente -->
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SEZIONE ABBONAMENTI -->
-      <section id="abbonamenti" class="content-section">
-        <div class="hero-banner" style="background: linear-gradient(rgba(10, 15, 44, 0.9), rgba(10, 15, 44, 0.9)), url('https://images.unsplash.com/photo-1563720223488-8f2f62a6e71a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
-          <h2>Abbonamenti Manutenzione</h2>
-          <p>Piani personalizzati per ogni tipo di veicolo</p>
-        </div>
-        
-        <div class="plans-grid" id="subscriptionsGrid" style="margin: 40px 0;">
-          <!-- Abbonamenti caricati dinamicamente -->
-        </div>
-      </section>
-
-      <!-- SEZIONE AUTO ELETTRICHE -->
-      <section id="auto-nuove" class="content-section">
-        <div class="hero-banner" style="background: linear-gradient(rgba(10, 15, 44, 0.9), rgba(10, 15, 44, 0.9)), url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
-          <h2>Auto Elettriche & Ibride</h2>
-          <p>Novità 2024-2025 con consegna in 30 giorni</p>
-        </div>
-        
-        <div class="cars-grid" id="evCarsGrid" style="margin: 40px 0;">
-          <!-- Auto elettriche caricate dinamicamente -->
-        </div>
-      </section>
-
-      <!-- SEZIONE MADE IN CHINA -->
-      <section id="cinese" class="content-section">
-        <div class="hero-banner" style="background: linear-gradient(rgba(10, 15, 44, 0.9), rgba(10, 15, 44, 0.9)), url('https://images.unsplash.com/photo-1601042879364-f3947d1f9fc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
-          <h2>Made in China - Premium Quality</h2>
-          <p>Ricambi certificati per auto cinesi e non solo</p>
-        </div>
-        
-        <div class="china-grid" id="chinaPartsGrid" style="margin: 40px 0;">
-          <!-- Ricambi cinesi caricati dinamicamente -->
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <script>
-    // ===== DATABASE COMPLETO PRODOTTI =====
-    const productsDatabase = {
-      all: [
-        // AUTO ELETTRICHE
-        {
-          id: 'ev001',
-          name: 'BYD Seal Excellence',
-          category: 'ev',
-          type: 'auto',
-          price: 49900,
-          image: 'byd-seal.png',
-          description: 'Berlina elettrica premium, autonomia 520km, accelerazione 0-100 in 5.9s',
-          specs: ['520km WLTP', '313 CV', '5.9s 0-100', 'Bat. 82.5 kWh'],
-          badge: 'EV',
-          badgeColor: '#00ff9d',
-          brand: 'BYD',
-          delivery: '30 giorni',
-          warranty: '8 anni batteria'
-        },
-        {
-          id: 'ev002',
-          name: 'MG4 Electric',
-          category: 'ev',
-          type: 'auto',
-          price: 34900,
-          image: 'mg4.png',
-          description: 'Compact EV con piattaforma MSP, design sportivo',
-          specs: ['450km WLTP', '204 CV', '7.7s 0-100', 'Bat. 64 kWh'],
-          badge: 'BEST SELLER',
-          badgeColor: '#ff3366',
-          brand: 'MG Motor',
-          delivery: '15 giorni',
-          warranty: '7 anni'
-        },
-        {
-          id: 'ev003',
-          name: 'Tesla Model 3 RWD',
-          category: 'ev',
-          type: 'auto',
-          price: 45900,
-          image: 'tesla-model3.png',
-          description: 'Icona elettrica, tecnologia Autopilot, supercriche veloci',
-          specs: ['491km WLTP', '283 CV', '6.1s 0-100', 'Bat. 60 kWh'],
-          badge: 'SUPERCHARGER',
-          badgeColor: '#ffaa00',
-          brand: 'Tesla',
-          delivery: '45 giorni',
-          warranty: '8 anni/160k km'
-        },
-
-        // RICAMBI TERMICI EUROPEI
-        {
-          id: 'ice001',
-          name: 'Kit Distribuzione Completo',
-          category: 'ice',
-          type: 'ricambio',
-          price: 289,
-          image: 'kit-distribuzione.png',
-          description: 'Kit distribuzione completo per VW Golf 1.6 TDI',
-          specs: ['Compatibile VW/Audi', 'Gates Original', 'Cinghia + tenditori', 'Made in Germany'],
-          badge: 'OE QUALITY',
-          badgeColor: '#4fd1ff',
-          brand: 'Gates',
-          compatibility: 'VW, Audi, Seat, Skoda',
-          stock: 'Disponibile'
-        },
-        {
-          id: 'ice002',
-          name: 'Freni Brembo Kit',
-          category: 'ice',
-          type: 'ricambio',
-          price: 450,
-          image: 'freni-brembo.png',
-          description: 'Kit dischi e pastiglie anteriori Brembo',
-          specs: ['Dischi ventilati', 'Pastiglie sport', 'Per auto sportive', 'Made in Italy'],
-          badge: 'PERFORMANCE',
-          badgeColor: '#ff5555',
-          brand: 'Brembo',
-          compatibility: 'BMW, Mercedes, Audi',
-          stock: '24h'
-        },
-
-        // RICAMBI CINESI
-        {
-          id: 'china001',
-          name: 'Batteria Litio 12V',
-          category: 'china',
-          type: 'ricambio',
-          price: 189,
-          image: 'batteria-litio.png',
-          description: 'Batteria al litio 12V per auto elettriche/ibride',
-          specs: ['Lifepo4', '5kg peso', '3000 cicli', 'CE certificato'],
-          badge: 'MADE IN CHINA',
-          badgeColor: '#ff9900',
-          brand: 'CATL',
-          compatibility: 'BYD, MG, NIO',
-          stock: 'Disponibile'
-        },
-        {
-          id: 'china002',
-          name: 'Display Touchscreen 10"',
-          category: 'china',
-          type: 'ricambio',
-          price: 320,
-          image: 'display-touch.png',
-          description: 'Display Android Auto/Apple CarPlay per qualsiasi auto',
-          specs: ['Android 12', '4GB RAM', '4G LTE', 'Retrofit universale'],
-          badge: 'SMART UPGRADE',
-          badgeColor: '#00ff9d',
-          brand: 'Joying',
-          compatibility: 'Universale',
-          stock: 'Disponibile'
-        },
-
-        // ABBONAMENTI
-        {
-          id: 'sub001',
-          name: 'EV Care Plus',
-          category: 'subscription',
-          type: 'abbonamento',
-          price: 129,
-          image: 'ev-care.png',
-          description: 'Manutenzione completa auto elettriche',
-          specs: ['2 controlli batteria/anno', 'Sostituzione fluidi', 'Diagnostica annuale', 'Assistenza 24/7'],
-          badge: 'ABBONAMENTO',
-          badgeColor: '#0066ff',
-          brand: 'AutoCare',
-          duration: '12 mesi',
-          includes: ['Batteria check', 'Sistemi EV', 'Freni rigenerativi']
-        },
-        {
-          id: 'sub002',
-          name: 'Full Protection',
-          category: 'subscription',
-          type: 'abbonamento',
-          price: 89,
-          image: 'full-protection.png',
-          description: 'Protezione totale per auto termiche',
-          specs: ['2 cambi olio', 'Controllo freni', 'Diagnostica computerizzata', 'Soccorso stradale'],
-          badge: 'POPOLARE',
-          badgeColor: '#ff3366',
-          brand: 'AutoCare',
-          duration: '12 mesi',
-          includes: ['Olio e filtri', 'Controlli sicurezza', 'Assistenza']
-        }
-      ]
-    };
-
-    // ===== CARRELLO =====
-    let cart = JSON.parse(localStorage.getItem('autocare_cart')) || [];
-
-    // ===== INIZIALIZZAZIONE =====
-    document.addEventListener('DOMContentLoaded', () => {
-      loadProducts();
-      updateCartDisplay();
-      initializeFilters();
-      loadSubscriptions();
-      loadEVCars();
-      loadChinaParts();
-    });
-
-    // ===== GESTIONE SEZIONI =====
-    function showSection(sectionId) {
-      // Aggiorna navbar
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-      });
-      event.target.classList.add('active');
-      
-      // Mostra sezione
-      document.querySelectorAll('.content-section').forEach(section => {
-        section.classList.remove('active');
-      });
-      document.getElementById(sectionId).classList.add('active');
-      
-      // Scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // ===== CARICAMENTO PRODOTTI =====
-    function loadProducts(filter = 'all') {
-      const grid = document.getElementById('productsGrid');
-      if (!grid) return;
-      
-      let filteredProducts = productsDatabase.all;
-      
-      if (filter !== 'all') {
-        filteredProducts = productsDatabase.all.filter(p => p.category === filter);
-      }
-      
-      grid.innerHTML = filteredProducts.map(product => `
-        <div class="product-card">
-          ${product.badge ? `<div class="product-badge" style="background: ${product.badgeColor}">${product.badge}</div>` : ''}
-          
-          <div class="product-image">
-            <i class="fas fa-${product.type === 'auto' ? 'car' : product.type === 'ricambio' ? 'cog' : 'sync-alt'}" 
-               style="font-size: 4rem; color: ${product.badgeColor || '#4fd1ff'}; opacity: 0.7;"></i>
-          </div>
-          
-          <div class="product-info">
-            <h3 class="product-title">${product.name}</h3>
-            <p class="product-description">${product.description}</p>
-            
-            <div class="product-specs">
-              ${product.specs.map(spec => `<span class="spec">${spec}</span>`).join('')}
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-tree"></i>
+                <h1>Arte<span>CNC</span></h1>
             </div>
             
-            <div class="product-footer">
-              <div>
-                <div class="product-price">€${product.price.toLocaleString('it-IT')}</div>
-                <small style="opacity: 0.7;">${product.brand} • ${product.stock || product.delivery || product.duration}</small>
-              </div>
-              <button class="btn-add-to-cart" onclick="addToCart('${product.id}')">
-                <i class="fas fa-cart-plus"></i> Aggiungi
-              </button>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // ===== FILTRI =====
-    function initializeFilters() {
-      const filterItems = document.querySelectorAll('.category-item');
-      filterItems.forEach(item => {
-        item.addEventListener('click', function() {
-          filterItems.forEach(i => i.classList.remove('active'));
-          this.classList.add('active');
-          
-          const filter = this.getAttribute('onclick').match(/'([^']+)'/)[1];
-          loadProducts(filter);
-        });
-      });
-    }
-
-    // ===== CARICAMENTO SEZIONI SPECIALI =====
-    function loadSubscriptions() {
-      const grid = document.getElementById('subscriptionsGrid');
-      if (!grid) return;
-      
-      const subscriptions = productsDatabase.all.filter(p => p.category === 'subscription');
-      
-      grid.innerHTML = subscriptions.map(sub => `
-        <div class="product-card" style="max-width: 350px; margin: 0 auto;">
-          <div class="product-image" style="background: linear-gradient(45deg, #0066ff, #4fd1ff);">
-            <i class="fas fa-sync-alt" style="font-size: 5rem; color: white;"></i>
-          </div>
-          <div class="product-info">
-            <h3>${sub.name}</h3>
-            <p>${sub.description}</p>
-            <div class="price" style="font-size: 2.5rem; color: #4fd1ff;">€${sub.price}/anno</div>
-            <button class="btn-add-to-cart" onclick="addToCart('${sub.id}')" style="width: 100%;">
-              <i class="fas fa-shopping-cart"></i> Attiva abbonamento
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
             </button>
-          </div>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Prodotti</a></li>
+                    <li><a href="#customize">Personalizza</a></li>
+                    <li><a href="#about">Chi Siamo</a></li>
+                    <li><a href="#contact">Contatti</a></li>
+                </ul>
+            </nav>
+            
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
         </div>
-      `).join('');
-    }
+    </header>
 
-    function loadEVCars() {
-      const grid = document.getElementById('evCarsGrid');
-      if (!grid) return;
-      
-      const evCars = productsDatabase.all.filter(p => p.category === 'ev');
-      
-      grid.innerHTML = evCars.map(car => `
-        <div class="product-card">
-          <div class="product-image" style="background: linear-gradient(45deg, #00cc7a, #00ff9d);">
-            <i class="fas fa-car" style="font-size: 5rem; color: white;"></i>
-          </div>
-          <div class="product-info">
-            <h3>${car.name}</h3>
-            <p>${car.description}</p>
-            <div style="margin: 15px 0;">
-              <strong>Consegna: ${car.delivery}</strong><br>
-              <strong>Garanzia: ${car.warranty}</strong>
-            </div>
-            <div class="product-footer">
-              <div class="product-price">€${car.price.toLocaleString('it-IT')}</div>
-              <button class="btn-add-to-cart" onclick="addToCart('${car.id}')">
-                <i class="fas fa-car"></i> Configura
-              </button>
-            </div>
-          </div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Bassorilievi in Legno<br>Realizzati con Fresatura CNC</h2>
+            <p>Trasformiamo il legno in opere d'arte personalizzate con tecnologia CNC di precisione. Ogni pezzo è unico, realizzato su misura per te.</p>
+            <a href="#products" class="btn">Scopri i Nostri Prodotti</a>
         </div>
-      `).join('');
-    }
+    </section>
 
-    function loadChinaParts() {
-      const grid = document.getElementById('chinaPartsGrid');
-      if (!grid) return;
-      
-      const chinaParts = productsDatabase.all.filter(p => p.category === 'china');
-      
-      grid.innerHTML = chinaParts.map(part => `
-        <div class="product-card">
-          <div class="product-image" style="background: linear-gradient(45deg, #ff3366, #ff9900);">
-            <i class="fas fa-flag" style="font-size: 4rem; color: white;"></i>
-          </div>
-          <div class="product-info">
-            <h3>${part.name}</h3>
-            <p>${part.description}</p>
-            <div class="product-specs">
-              ${part.specs.map(spec => `<span class="spec">${spec}</span>`).join('')}
+    <!-- Prodotti -->
+    <section id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>I Nostri Prodotti</h2>
+                <p>Seleziona tra i nostri modelli di bassorilievi in legno o personalizza il tuo design</p>
             </div>
-            <div style="margin: 10px 0; font-size: 0.9rem;">
-              <i class="fas fa-check-circle" style="color: #00ff9d;"></i> Certificato CE<br>
-              <i class="fas fa-shipping-fast" style="color: #4fd1ff;"></i> ${part.stock}
-            </div>
-            <div class="product-footer">
-              <div class="product-price">€${part.price}</div>
-              <button class="btn-add-to-cart" onclick="addToCart('${part.id}')">
-                <i class="fas fa-shopping-cart"></i> Acquista
-              </button>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // ===== GESTIONE CARRELLO =====
-    function addToCart(productId) {
-      const product = productsDatabase.all.find(p => p.id === productId);
-      if (!product) return;
-      
-      const existingItem = cart.find(item => item.id === productId);
-      
-      if (existingItem) {
-        existingItem.quantity += 1;
-      } else {
-        cart.push({
-          ...product,
-          quantity: 1,
-          addedAt: new Date().toISOString()
-        });
-      }
-      
-      saveCart();
-      updateCartDisplay();
-      showNotification(`✅ ${product.name} aggiunto al carrello!`, 'success');
-    }
-
-    function removeFromCart(productId) {
-      cart = cart.filter(item => item.id !== productId);
-      saveCart();
-      updateCartDisplay();
-      showNotification('🗑️ Prodotto rimosso dal carrello', 'warning');
-    }
-
-    function updateQuantity(productId, delta) {
-      const item = cart.find(item => item.id === productId);
-      if (item) {
-        item.quantity += delta;
-        if (item.quantity <= 0) {
-          removeFromCart(productId);
-        } else {
-          saveCart();
-          updateCartDisplay();
-        }
-      }
-    }
-
-    function saveCart() {
-      localStorage.setItem('autocare_cart', JSON.stringify(cart));
-    }
-
-    function updateCartDisplay() {
-      // Aggiorna contatore
-      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      document.getElementById('cartCount').textContent = totalItems;
-      
-      // Aggiorna modale carrello
-      const cartItems = document.getElementById('cartItems');
-      const cartTotal = document.getElementById('cartTotal');
-      
-      if (cartItems && cartTotal) {
-        if (cart.length === 0) {
-          cartItems.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 40px;">Il carrello è vuoto</p>';
-          cartTotal.textContent = '€0.00';
-        } else {
-          cartItems.innerHTML = cart.map(item => `
-            <div class="cart-item">
-              <div class="cart-item-image">
-                <i class="fas fa-${item.type === 'auto' ? 'car' : item.type === 'ricambio' ? 'cog' : 'sync-alt'}" 
-                   style="font-size: 2rem; color: #4fd1ff;"></i>
-              </div>
-              <div class="cart-item-details">
-                <h4>${item.name}</h4>
-                <p style="font-size: 0.9rem; opacity: 0.8;">${item.brand} • €${item.price}</p>
-                <div class="cart-item-quantity">
-                  <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
-                  <span>${item.quantity}</span>
-                  <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
-                  <button onclick="removeFromCart('${item.id}')" style="margin-left: 20px; background: none; border: none; color: #ff5555; cursor: pointer;">
-                    <i class="fas fa-trash"></i>
-                  </button>
+            
+            <div class="products-grid">
+                <!-- Prodotto 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1596557981358-3c6a19d89e3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Bassorilievo Albero della Vita">
+                    </div>
+                    <div class="product-info">
+                        <h3>Albero della Vita</h3>
+                        <p>Bassorilievo in legno di quercia con design simbolico dell'albero della vita. Dimensioni: 30x40cm.</p>
+                        <div class="product-price">€89,90</div>
+                        <button class="btn" onclick="personalizeProduct('Albero della Vita')">Personalizza</button>
+                    </div>
                 </div>
-              </div>
+                
+                <!-- Prodotto 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1567767292273-0f4d8b8a8c8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Bassorilievo Paesaggio Montano">
+                    </div>
+                    <div class="product-info">
+                        <h3>Paesaggio Montano</h3>
+                        <p>Rappresentazione artistica di un paesaggio montano in legno di noce. Dimensioni: 40x30cm.</p>
+                        <div class="product-price">€109,90</div>
+                        <button class="btn" onclick="personalizeProduct('Paesaggio Montano')">Personalizza</button>
+                    </div>
+                </div>
+                
+                <!-- Prodotto 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1581235720526-7b74c8c7335e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Bassorilievo Ritratto Familiare">
+                    </div>
+                    <div class="product-info">
+                        <h3>Ritratto Familiare</h3>
+                        <p>Bassorilievo personalizzabile per ritratti familiari in legno di ciliegio. Dimensioni: 35x35cm.</p>
+                        <div class="product-price">€149,90</div>
+                        <button class="btn" onclick="personalizeProduct('Ritratto Familiare')">Personalizza</button>
+                    </div>
+                </div>
+                
+                <!-- Prodotto 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1598710510671-6d6f5008290b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Bassorilievo Geometrico">
+                    </div>
+                    <div class="product-info">
+                        <h3>Design Geometrico</h3>
+                        <p>Pattern geometrico moderno realizzato in legno di acero. Dimensioni: 25x50cm.</p>
+                        <div class="product-price">€79,90</div>
+                        <button class="btn" onclick="personalizeProduct('Design Geometrico')">Personalizza</button>
+                    </div>
+                </div>
             </div>
-          `).join('');
-          
-          const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-          cartTotal.textContent = `€${total.toLocaleString('it-IT', { minimumFractionDigits: 2 })}`;
-        }
-      }
-    }
-
-    function toggleCart() {
-      document.getElementById('cartModal').classList.toggle('open');
-      if (document.getElementById('cartModal').classList.contains('open')) {
-        updateCartDisplay();
-      }
-    }
-
-    // ===== CHECKOUT =====
-    async function checkout() {
-      if (cart.length === 0) {
-        showNotification('🛒 Il carrello è vuoto!', 'warning');
-        return;
-      }
-      
-      // Raggruppa prodotti per tipo
-      const subscriptions = cart.filter(item => item.type === 'abbonamento');
-      const products = cart.filter(item => item.type !== 'abbonamento');
-      
-      if (subscriptions.length > 0) {
-        // Per abbonamenti, usa il flusso esistente
-        showNotification('🔗 Reindirizzamento a checkout abbonamenti...', 'info');
-        // Qui potresti reindirizzare alla pagina checkout esistente
-        setTimeout(() => {
-          window.location.href = '#paymentSection';
-          toggleCart();
-        }, 1000);
-      } else {
-        // Per prodotti fisici, crea ordine
-        const orderId = 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
-        
-        const orderData = {
-          orderId: orderId,
-          items: cart,
-          total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-          timestamp: new Date().toISOString()
-        };
-        
-        // Salva ordine nel localStorage (in produzione salveresti su backend)
-        localStorage.setItem('last_order', JSON.stringify(orderData));
-        
-        // Svuota carrello
-        cart = [];
-        saveCart();
-        updateCartDisplay();
-        
-        // Mostra conferma
-        showNotification(`🎉 Ordine #${orderId} creato! Ti contatteremo per la spedizione.`, 'success');
-        toggleCart();
-        
-        // Potresti reindirizzare a pagina riepilogo ordine
-        setTimeout(() => {
-          alert(`Ordine confermato!\nID: ${orderId}\nTotale: €${orderData.total}\n\nRiceverai una email con i dettagli di spedizione.`);
-        }, 500);
-      }
-    }
-
-    // ===== NOTIFICAZIONI =====
-    function showNotification(message, type = 'info') {
-      const notification = document.createElement('div');
-      notification.className = 'notification';
-      notification.innerHTML = `
-        <div style="
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          background: ${type === 'success' ? '#00cc88' : type === 'warning' ? '#ffaa00' : '#4fd1ff'};
-          color: white;
-          padding: 15px 25px;
-          border-radius: 10px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-          z-index: 10000;
-          animation: slideIn 0.3s ease-out;
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          max-width: 400px;
-        ">
-          <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-          <span>${message}</span>
         </div>
-      `;
-      
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.style.animation = 'slideIn 0.3s ease-out reverse';
-        setTimeout(() => notification.remove(), 300);
-      }, 3000);
-    }
+    </section>
 
-    // ===== API INTEGRATION (ESEMPIO) =====
-    async function loadRealProductsFromAPI() {
-      try {
-        // Esempio chiamata API prodotti reali
-        const response = await fetch('https://api.tuo-backend.com/products', {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer TUO_TOKEN',
-            'Content-Type': 'application/json'
-          }
+    <!-- Personalizzazione -->
+    <section class="customization-section" id="customize">
+        <div class="container">
+            <div class="section-title">
+                <h2>Personalizza il Tuo Bassorilievo</h2>
+                <p>Trasforma la tua idea in un'opera d'arte unica in legno con il nostro processo di personalizzazione</p>
+            </div>
+            
+            <div class="customization-steps">
+                <div class="step">
+                    <i class="fas fa-upload"></i>
+                    <h3>1. Carica il Design</h3>
+                    <p>Invia il tuo disegno, foto o descrizione. Supportiamo vari formati digitali.</p>
+                </div>
+                
+                <div class="step">
+                    <i class="fas fa-cog"></i>
+                    <h3>2. Scegli Specifiche</h3>
+                    <p>Seleziona tipo di legno, dimensioni, finitura e altre opzioni personalizzate.</p>
+                </div>
+                
+                <div class="step">
+                    <i class="fas fa-truck"></i>
+                    <h3>3. Ricevi a Casa</h3>
+                    <p>Realizziamo il tuo bassorilievo con CNC e te lo spediamo in 7-10 giorni lavorativi.</p>
+                </div>
+            </div>
+            
+            <div class="customization-demo">
+                <div class="custom-preview">
+                    <div class="preview-image" id="previewImage">
+                        <p>Anteprima personalizzazione</p>
+                    </div>
+                    <div class="product-price" id="customPrice">€99,90</div>
+                    <button class="btn" onclick="addToCart()">Aggiungi al Carrello</button>
+                </div>
+                
+                <div class="custom-options">
+                    <h3 style="margin-bottom: 20px; color: var(--primary-dark);">Opzioni di Personalizzazione</h3>
+                    
+                    <div class="option-group">
+                        <label for="productSelect">Modello Base:</label>
+                        <select id="productSelect" onchange="updateCustomization()">
+                            <option value="Albero della Vita">Albero della Vita</option>
+                            <option value="Paesaggio Montano">Paesaggio Montano</option>
+                            <option value="Ritratto Familiare">Ritratto Familiare</option>
+                            <option value="Design Geometrico">Design Geometrico</option>
+                            <option value="Personalizzato">Design Completamente Personalizzato</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Tipo di Legno:</label>
+                        <div class="wood-types">
+                            <div class="wood-type active" onclick="selectWoodType(this, 'Quercia')">
+                                <img src="https://images.unsplash.com/photo-1599595371170-6b64d6c37d5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Quercia">
+                                <div>Quercia</div>
+                            </div>
+                            <div class="wood-type" onclick="selectWoodType(this, 'Noce')">
+                                <img src="https://images.unsplash.com/photo-1548428229-8b7d6a6d1c9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Noce">
+                                <div>Noce</div>
+                            </div>
+                            <div class="wood-type" onclick="selectWoodType(this, 'Ciliegio')">
+                                <img src="https://images.unsplash.com/photo-1575787512295-63b69bf0a9bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Ciliegio">
+                                <div>Ciliegio</div>
+                            </div>
+                            <div class="wood-type" onclick="selectWoodType(this, 'Acero')">
+                                <img src="https://images.unsplash.com/photo-1592495836620-e8d0a5f5bb12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Acero">
+                                <div>Acero</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label for="dimensions">Dimensioni (cm):</label>
+                        <select id="dimensions" onchange="updateCustomization()">
+                            <option value="small">20x30 (+€0)</option>
+                            <option value="medium" selected>30x40 (+€20)</option>
+                            <option value="large">40x60 (+€45)</option>
+                            <option value="xlarge">50x70 (+€70)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label for="finish">Finitura:</label>
+                        <select id="finish" onchange="updateCustomization()">
+                            <option value="natural" selected>Naturale (+€0)</option>
+                            <option value="oil">Olio di lino (+€15)</option>
+                            <option value="wax">Cera d'api (+€18)</option>
+                            <option value="varnish">Vernice protettiva (+€25)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label for="personalText">Testo Personalizzato (max 30 caratteri):</label>
+                        <input type="text" id="personalText" placeholder="Inserisci il testo desiderato" maxlength="30" oninput="updateCustomization()">
+                    </div>
+                    
+                    <div class="option-group">
+                        <label for="notes">Note Aggiuntive:</label>
+                        <textarea id="notes" placeholder="Descrivi eventuali modifiche specifiche al design..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ArteCNC</h3>
+                    <p>Specialisti in bassorilievi in legno realizzati con tecnologia CNC di precisione. Trasformiamo le tue idee in opere d'arte uniche.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Link Utili</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Prodotti</a></li>
+                        <li><a href="#customize">Personalizza</a></li>
+                        <li><a href="#">Come Ordinare</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contatti</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Via del Legno 123, 50100 Firenze</li>
+                        <li><i class="fas fa-phone"></i> +39 055 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@artecnc.it</li>
+                        <li><i class="fas fa-clock"></i> Lun-Ven: 9:00-18:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 ArteCNC - Bassorilievi in Legno CNC. Tutti i diritti riservati.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
         });
         
-        const data = await response.json();
-        // Gestisci i dati reali...
+        // Chiudi menu quando si clicca su un link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
         
-      } catch (error) {
-        console.error('Errore caricamento prodotti:', error);
-        showNotification('⚠️ Errore nel caricamento prodotti', 'warning');
-      }
-    }
-
-    // ===== INTEGRAZIONE CON IL SISTEMA ESISTENTE =====
-    function integrateWithExistingSystem() {
-      // Qui puoi integrare con il codice esistente di pagamento Stripe
-      console.log('Sistema integrato con Stripe payments');
-      
-      // Esempio: quando un utente completa il checkout
-      // chiama la funzione processPayment() esistente
-    }
-
-    // ===== FUNZIONI ESPORTATE =====
-    window.showSection = showSection;
-    window.filterProducts = loadProducts;
-    window.addToCart = addToCart;
-    window.removeFromCart = removeFromCart;
-    window.updateQuantity = updateQuantity;
-    window.toggleCart = toggleCart;
-    window.checkout = checkout;
-    window.showNotification = showNotification;
-  </script>
+        // Personalizzazione prodotto
+        function personalizeProduct(productName) {
+            document.getElementById('productSelect').value = productName;
+            updateCustomization();
+            
+            // Scroll alla sezione personalizzazione
+            document.getElementById('customize').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Seleziona tipo di legno
+        function selectWoodType(element, woodType) {
+            document.querySelectorAll('.wood-type').forEach(wood => {
+                wood.classList.remove('active');
+            });
+            element.classList.add('active');
+            updateCustomization();
+        }
+        
+        // Aggiorna anteprima e prezzo
+        function updateCustomization() {
+            const productSelect = document.getElementById('productSelect').value;
+            const dimensions = document.getElementById('dimensions').value;
+            const finish = document.getElementById('finish').value;
+            const personalText = document.getElementById('personalText').value;
+            
+            // Prezzo base in base al prodotto
+            let basePrice = 99.90;
+            switch(productSelect) {
+                case 'Albero della Vita': basePrice = 89.90; break;
+                case 'Paesaggio Montano': basePrice = 109.90; break;
+                case 'Ritratto Familiare': basePrice = 149.90; break;
+                case 'Design Geometrico': basePrice = 79.90; break;
+                case 'Personalizzato': basePrice = 199.90; break;
+            }
+            
+            // Aggiunte per dimensioni
+            let dimensionAdd = 0;
+            switch(dimensions) {
+                case 'small': dimensionAdd = 0; break;
+                case 'medium': dimensionAdd = 20; break;
+                case 'large': dimensionAdd = 45; break;
+                case 'xlarge': dimensionAdd = 70; break;
+            }
+            
+            // Aggiunte per finitura
+            let finishAdd = 0;
+            switch(finish) {
+                case 'natural': finishAdd = 0; break;
+                case 'oil': finishAdd = 15; break;
+                case 'wax': finishAdd = 18; break;
+                case 'varnish': finishAdd = 25; break;
+            }
+            
+            // Calcolo prezzo totale
+            const totalPrice = basePrice + dimensionAdd + finishAdd;
+            
+            // Aggiorna visualizzazione prezzo
+            document.getElementById('customPrice').textContent = `€${totalPrice.toFixed(2)}`;
+            
+            // Aggiorna anteprima
+            const previewImage = document.getElementById('previewImage');
+            let previewText = `${productSelect}`;
+            
+            if (personalText) {
+                previewText += ` con testo: "${personalText}"`;
+            }
+            
+            previewImage.innerHTML = `<p>${previewText}</p>`;
+            
+            // Aggiorna contatore carrello (simulazione)
+            updateCartCount();
+        }
+        
+        // Aggiungi al carrello
+        function addToCart() {
+            const cartCount = document.querySelector('.cart-count');
+            let currentCount = parseInt(cartCount.textContent);
+            cartCount.textContent = currentCount + 1;
+            
+            // Mostra conferma
+            alert('Prodotto aggiunto al carrello!');
+        }
+        
+        // Aggiorna contatore carrello (simulazione)
+        function updateCartCount() {
+            // In una implementazione reale, qui ci sarebbe la logica per calcolare
+            // gli articoli nel carrello basandosi su dati reali
+        }
+        
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCustomization();
+        });
+    </script>
 </body>
 </html>
