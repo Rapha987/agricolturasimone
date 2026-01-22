@@ -1,223 +1,58 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgricolturaSimone</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #01490F;
-            color: white;
-            padding: 1rem 0;
-            text-align: center;
-            position: relative;
-        }
-        header img {
-            width: 400px;
-            height: auto;
-            display: block;
-            margin: 1rem auto 0;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            background: #3E8E41;
-            padding: 0.5rem 0;
-        }
-        nav a {
-            color: white;
-            margin: 0 1rem;
-            text-decoration: none;
-        }
-        section {
-            padding: 2rem;
-        }
-        h2 {
-            color: #3E8E41;
-            border-bottom: 2px solid #3E8E41;
-            padding-bottom: 0.5rem;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }
-        th, td {
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-        }
-        th {
-            background: #f4f4f4;
-        }
-        form {
-            background: #f9f9f9;
-            padding: 2rem;
-            border: 1px solid #ccc;
-            margin-top: 2rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background: #3E8E41;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>AutoCare Subscription</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <img src="AgricolturaSimone.png" alt="Logo di AgricolturaSimone">
-    </header>
-    <nav>
-        <a href="#manutenzione-terreno">Manutenzione del Terreno</a>
-        <a href="#gestione-bestiame">Gestione del Bestiame</a>
-        <a href="#manutenzione-attrezzature">Manutenzione delle Attrezzature</a>
-        <a href="#consulenza">Consulenza</a>
-        <a href="#richiesta-informazioni">Richiedi Informazioni</a>
-    </nav>
-    <main>
-        <section id="manutenzione-terreno">
-            <h2>Manutenzione del Terreno</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Servizio</th>
-                        <th>Descrizione</th>
-                        <th>Prezzo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Potatura</td>
-                        <td>Servizi di potatura per alberi da frutto, siepi e cespugli, vigneti.</td>
-                        <td>€ 100,00</td>
-                    </tr>
-                    <tr>
-                        <td>Semina e Piantagione</td>
-                        <td>Seminazione di cereali e legumi, piantagione di alberi e arbusti, trapianto di piante.</td>
-                        <td>€ 150,00</td>
-                    </tr>
-                    <tr>
-                        <td>Irrigazione</td>
-                        <td>Installazione e manutenzione di sistemi di irrigazione.</td>
-                        <td>€ 200,00</td>
-                    </tr>
-                    <tr>
-                        <td>Concimazione</td>
-                        <td>Analisi del terreno e piani di concimazione personalizzati.</td>
-                        <td>€ 120,00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section id="gestione-bestiame">
-            <h2>Gestione del Bestiame</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Servizio</th>
-                        <th>Descrizione</th>
-                        <th>Prezzo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Gestione del Bestiame</td>
-                        <td>Nutrizione, assistenza veterinaria, pianificazione delle nascite e delle inseminazioni.</td>
-                        <td>€ 300,00</td>
-                    </tr>
-                    <tr>
-                        <td>Cura degli Animali</td>
-                        <td>Toelettatura, pulizia, trattamenti antiparassitari e vaccinazioni.</td>
-                        <td>€ 100,00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section id="manutenzione-attrezzature">
-            <h2>Manutenzione delle Attrezzature</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Servizio</th>
-                        <th>Descrizione</th>
-                        <th>Prezzo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Riparazione e Manutenzione</td>
-                        <td>Riparazione di trattori, macchine agricole e attrezzature per la potatura.</td>
-                        <td>€ 250,00</td>
-                    </tr>
-                    <tr>
-                        <td>Affilatura degli Strumenti</td>
-                        <td>Affilatura di lame di potatura, utensili manuali e motorizzati.</td>
-                        <td>€ 50,00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section id="consulenza">
-            <h2>Consulenza</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Servizio</th>
-                        <th>Descrizione</th>
-                        <th>Prezzo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Consulenza Agronomica</td>
-                        <td>Piani di coltivazione, analisi del suolo e tecniche di agricoltura sostenibile.</td>
-                        <td>€ 200,00</td>
-                    </tr>
-                    <tr>
-                        <td>Consulenza Finanziaria</td>
-                        <td>Pianificazione di investimenti agricoli, accesso a finanziamenti e sovvenzioni.</td>
-                        <td>€ 150,00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <section id="richiesta-informazioni">
-            <h2>Richiedi Informazioni</h2>
-            <form action="#" method="post">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" required>
-                
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="telefono">Telefono</label>
-                <input type="tel" id="telefono" name="telefono">
-                
-                <label for="messaggio">Messaggio</label>
-                <textarea id="messaggio" name="messaggio" rows="4" required></textarea>
-                
-                <button type="submit">Invia</button>
-            </form>
-        </section>
-    </main>
+
+  <div class="app">
+
+    <h1>Gestione Manutenzione Auto</h1>
+    <p>Inserisci la targa e attiva il tuo piano</p>
+
+    <!-- STEP 1 -->
+    <div class="card">
+      <label>Targa veicolo</label>
+      <input type="text" id="plate" placeholder="AB123CD">
+      <button onclick="detectVehicle()">Continua</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="card hidden" id="vehicleResult">
+      <h3>Veicolo rilevato</h3>
+      <p id="vehicleType"></p>
+      <button onclick="showPlans()">Scegli piano</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="card hidden" id="plans">
+      <h3>Piani disponibili</h3>
+
+      <div class="plan">
+        <h4>Oil Basic</h4>
+        <p>1 cambio olio / anno</p>
+        <strong>79 € / anno</strong>
+        <button onclick="subscribe('Oil Basic')">Attiva</button>
+      </div>
+
+      <div class="plan">
+        <h4>EV Care Plan</h4>
+        <p>Check EV + fluidi</p>
+        <strong>129 € / anno</strong>
+        <button onclick="subscribe('EV Care')">Attiva</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="card hidden" id="confirmation">
+      <h3>Abbonamento attivato</h3>
+      <p id="summary"></p>
+    </div>
+
+  </div>
+
+<script src="app.js"></script>
 </body>
 </html>
